@@ -5,9 +5,9 @@ _tabversion = '3.8'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'ABA129A04250926751015271926E874A'
+_lr_signature = '23F6B603DD578A8518D708F556CD7070'
     
-_lr_action_items = {'SEMICOLON':([5,],[6,]),'NUMBER':([4,],[5,]),'OP_EQUAL':([3,],[4,]),'VAR':([0,],[1,]),'ID':([1,],[3,]),'$end':([2,6,],[0,-1,]),}
+_lr_action_items = {'OP_DIVIDE':([13,15,16,18,19,28,29,32,33,34,35,],[-17,20,-16,20,20,-18,-14,20,-13,20,20,]),'RPAREN':([13,15,16,19,28,29,32,33,34,35,],[-17,21,-16,28,-18,-14,-12,-13,-15,-11,]),'SEMICOLON':([13,16,18,26,28,29,32,33,34,35,],[-17,-16,27,36,-18,-14,-12,-13,-15,-11,]),'OP_MINUS':([13,15,16,18,19,28,29,32,33,34,35,],[-17,22,-16,22,22,-18,-14,-12,-13,22,-11,]),'OP_TIMES':([13,15,16,18,19,28,29,32,33,34,35,],[-17,23,-16,23,23,-18,-14,23,-13,23,23,]),'OP_GT':([13,15,16,18,19,28,29,32,33,34,35,],[-17,24,-16,24,24,-18,-14,-12,-13,-15,-11,]),'NUMBER':([10,12,14,17,20,22,23,24,25,],[13,13,13,26,13,13,13,13,13,]),'OP_PLUS':([13,15,16,18,19,28,29,32,33,34,35,],[-17,25,-16,25,25,-18,-14,-12,-13,25,-11,]),'LBRACKET':([21,],[30,]),'OP_EQUAL':([9,11,],[12,17,]),'WHILE':([0,2,3,4,6,8,27,30,31,36,37,38,],[-3,5,-4,-5,-2,-6,-8,-3,-9,-7,5,-10,]),'LPAREN':([5,10,12,14,20,22,23,24,25,],[10,14,14,14,14,14,14,14,14,]),'VAR':([0,2,3,4,6,8,27,30,31,36,37,38,],[-3,7,-4,-5,-2,-6,-8,-3,-9,-7,7,-10,]),'RBRACKET':([3,4,6,8,27,30,31,36,37,38,],[-4,-5,-2,-6,-8,-3,-9,-7,38,-10,]),'ID':([0,2,3,4,6,7,8,10,12,14,20,22,23,24,25,27,30,31,36,37,38,],[-3,9,-4,-5,-2,11,-6,16,16,16,16,16,16,16,16,-8,-3,-9,-7,9,-10,]),'$end':([0,1,2,3,4,6,8,27,31,36,38,],[-3,0,-1,-4,-5,-2,-6,-8,-9,-7,-10,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -16,7 +16,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'define':([0,],[2,]),}
+_lr_goto_items = {'statements':([0,30,],[2,37,]),'define_stmt':([2,37,],[4,4,]),'assign_stmt':([2,37,],[8,8,]),'while_stmt':([2,37,],[3,3,]),'program':([0,],[1,]),'statement':([2,37,],[6,6,]),'expression':([10,12,14,20,22,23,24,25,],[15,18,19,29,32,33,34,35,]),'compound_statements':([21,],[31,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -25,6 +25,23 @@ for _k, _v in _lr_goto_items.items():
        _lr_goto[_x][_k] = _y
 del _lr_goto_items
 _lr_productions = [
-  ("S' -> define","S'",1,None,None,None),
-  ('define -> VAR ID OP_EQUAL NUMBER SEMICOLON','define',5,'p_define','parser.py',6),
+  ("S' -> program","S'",1,None,None,None),
+  ('program -> statements','program',1,'p_program','parser.py',6),
+  ('statements -> statements statement','statements',2,'p_statements','parser.py',10),
+  ('statements -> <empty>','statements',0,'p_empty_statements','parser.py',14),
+  ('statement -> while_stmt','statement',1,'p_statement','parser.py',18),
+  ('statement -> define_stmt','statement',1,'p_statement','parser.py',19),
+  ('statement -> assign_stmt','statement',1,'p_statement','parser.py',20),
+  ('define_stmt -> VAR ID OP_EQUAL NUMBER SEMICOLON','define_stmt',5,'p_define','parser.py',24),
+  ('assign_stmt -> ID OP_EQUAL expression SEMICOLON','assign_stmt',4,'p_assign','parser.py',28),
+  ('while_stmt -> WHILE LPAREN expression RPAREN compound_statements','while_stmt',5,'p_while','parser.py',32),
+  ('compound_statements -> LBRACKET statements RBRACKET','compound_statements',3,'p_compound_statements','parser.py',36),
+  ('expression -> expression OP_PLUS expression','expression',3,'p_expression_bin_op','parser.py',39),
+  ('expression -> expression OP_MINUS expression','expression',3,'p_expression_bin_op','parser.py',40),
+  ('expression -> expression OP_TIMES expression','expression',3,'p_expression_bin_op','parser.py',41),
+  ('expression -> expression OP_DIVIDE expression','expression',3,'p_expression_bin_op','parser.py',42),
+  ('expression -> expression OP_GT expression','expression',3,'p_expression_bin_op','parser.py',43),
+  ('expression -> ID','expression',1,'p_expression_id','parser.py',48),
+  ('expression -> NUMBER','expression',1,'p_term_factor','parser.py',51),
+  ('expression -> LPAREN expression RPAREN','expression',3,'p_expression_expr','parser.py',55),
 ]

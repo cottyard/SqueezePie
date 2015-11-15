@@ -1,94 +1,624 @@
 Created by PLY version 3.8 (http://www.dabeaz.com/ply)
 
-Unused terminals:
-
-    OP_DIVIDE
-    RPAREN
-    OP_MINUS
-    OP_TIMES
-    OP_GT
-    OP_PLUS
-    LBRACKET
-    WHILE
-    LPAREN
-    RBRACKET
-
 Grammar
 
-Rule 0     S' -> define
-Rule 1     define -> VAR ID OP_EQUAL NUMBER SEMICOLON
+Rule 0     S' -> program
+Rule 1     program -> statements
+Rule 2     statements -> statements statement
+Rule 3     statements -> <empty>
+Rule 4     statement -> while_stmt
+Rule 5     statement -> define_stmt
+Rule 6     statement -> assign_stmt
+Rule 7     define_stmt -> VAR ID OP_EQUAL NUMBER SEMICOLON
+Rule 8     assign_stmt -> ID OP_EQUAL expression SEMICOLON
+Rule 9     while_stmt -> WHILE LPAREN expression RPAREN compound_statements
+Rule 10    compound_statements -> LBRACKET statements RBRACKET
+Rule 11    expression -> expression OP_PLUS expression
+Rule 12    expression -> expression OP_MINUS expression
+Rule 13    expression -> expression OP_TIMES expression
+Rule 14    expression -> expression OP_DIVIDE expression
+Rule 15    expression -> expression OP_GT expression
+Rule 16    expression -> ID
+Rule 17    expression -> NUMBER
+Rule 18    expression -> LPAREN expression RPAREN
 
 Terminals, with rules where they appear
 
-ID                   : 1
-LBRACKET             : 
-LPAREN               : 
-NUMBER               : 1
-OP_DIVIDE            : 
-OP_EQUAL             : 1
-OP_GT                : 
-OP_MINUS             : 
-OP_PLUS              : 
-OP_TIMES             : 
-RBRACKET             : 
-RPAREN               : 
-SEMICOLON            : 1
-VAR                  : 1
-WHILE                : 
+ID                   : 7 8 16
+LBRACKET             : 10
+LPAREN               : 9 18
+NUMBER               : 7 17
+OP_DIVIDE            : 14
+OP_EQUAL             : 7 8
+OP_GT                : 15
+OP_MINUS             : 12
+OP_PLUS              : 11
+OP_TIMES             : 13
+RBRACKET             : 10
+RPAREN               : 9 18
+SEMICOLON            : 7 8
+VAR                  : 7
+WHILE                : 9
 error                : 
 
 Nonterminals, with rules where they appear
 
-define               : 0
+assign_stmt          : 6
+compound_statements  : 9
+define_stmt          : 5
+expression           : 8 9 11 11 12 12 13 13 14 14 15 15 18
+program              : 0
+statement            : 2
+statements           : 1 2 10
+while_stmt           : 4
 
 Parsing method: LALR
 
 state 0
 
-    (0) S' -> . define
-    (1) define -> . VAR ID OP_EQUAL NUMBER SEMICOLON
+    (0) S' -> . program
+    (1) program -> . statements
+    (2) statements -> . statements statement
+    (3) statements -> .
 
-    VAR             shift and go to state 1
+    WHILE           reduce using rule 3 (statements -> .)
+    VAR             reduce using rule 3 (statements -> .)
+    ID              reduce using rule 3 (statements -> .)
+    $end            reduce using rule 3 (statements -> .)
 
-    define                         shift and go to state 2
+    program                        shift and go to state 1
+    statements                     shift and go to state 2
 
 state 1
 
-    (1) define -> VAR . ID OP_EQUAL NUMBER SEMICOLON
+    (0) S' -> program .
 
-    ID              shift and go to state 3
 
 
 state 2
 
-    (0) S' -> define .
+    (1) program -> statements .
+    (2) statements -> statements . statement
+    (4) statement -> . while_stmt
+    (5) statement -> . define_stmt
+    (6) statement -> . assign_stmt
+    (9) while_stmt -> . WHILE LPAREN expression RPAREN compound_statements
+    (7) define_stmt -> . VAR ID OP_EQUAL NUMBER SEMICOLON
+    (8) assign_stmt -> . ID OP_EQUAL expression SEMICOLON
 
+    $end            reduce using rule 1 (program -> statements .)
+    WHILE           shift and go to state 5
+    VAR             shift and go to state 7
+    ID              shift and go to state 9
 
+    define_stmt                    shift and go to state 4
+    assign_stmt                    shift and go to state 8
+    while_stmt                     shift and go to state 3
+    statement                      shift and go to state 6
 
 state 3
 
-    (1) define -> VAR ID . OP_EQUAL NUMBER SEMICOLON
+    (4) statement -> while_stmt .
 
-    OP_EQUAL        shift and go to state 4
+    RBRACKET        reduce using rule 4 (statement -> while_stmt .)
+    WHILE           reduce using rule 4 (statement -> while_stmt .)
+    VAR             reduce using rule 4 (statement -> while_stmt .)
+    ID              reduce using rule 4 (statement -> while_stmt .)
+    $end            reduce using rule 4 (statement -> while_stmt .)
 
 
 state 4
 
-    (1) define -> VAR ID OP_EQUAL . NUMBER SEMICOLON
+    (5) statement -> define_stmt .
 
-    NUMBER          shift and go to state 5
+    RBRACKET        reduce using rule 5 (statement -> define_stmt .)
+    WHILE           reduce using rule 5 (statement -> define_stmt .)
+    VAR             reduce using rule 5 (statement -> define_stmt .)
+    ID              reduce using rule 5 (statement -> define_stmt .)
+    $end            reduce using rule 5 (statement -> define_stmt .)
 
 
 state 5
 
-    (1) define -> VAR ID OP_EQUAL NUMBER . SEMICOLON
+    (9) while_stmt -> WHILE . LPAREN expression RPAREN compound_statements
 
-    SEMICOLON       shift and go to state 6
+    LPAREN          shift and go to state 10
 
 
 state 6
 
-    (1) define -> VAR ID OP_EQUAL NUMBER SEMICOLON .
+    (2) statements -> statements statement .
 
-    $end            reduce using rule 1 (define -> VAR ID OP_EQUAL NUMBER SEMICOLON .)
+    RBRACKET        reduce using rule 2 (statements -> statements statement .)
+    WHILE           reduce using rule 2 (statements -> statements statement .)
+    VAR             reduce using rule 2 (statements -> statements statement .)
+    ID              reduce using rule 2 (statements -> statements statement .)
+    $end            reduce using rule 2 (statements -> statements statement .)
+
+
+state 7
+
+    (7) define_stmt -> VAR . ID OP_EQUAL NUMBER SEMICOLON
+
+    ID              shift and go to state 11
+
+
+state 8
+
+    (6) statement -> assign_stmt .
+
+    RBRACKET        reduce using rule 6 (statement -> assign_stmt .)
+    WHILE           reduce using rule 6 (statement -> assign_stmt .)
+    VAR             reduce using rule 6 (statement -> assign_stmt .)
+    ID              reduce using rule 6 (statement -> assign_stmt .)
+    $end            reduce using rule 6 (statement -> assign_stmt .)
+
+
+state 9
+
+    (8) assign_stmt -> ID . OP_EQUAL expression SEMICOLON
+
+    OP_EQUAL        shift and go to state 12
+
+
+state 10
+
+    (9) while_stmt -> WHILE LPAREN . expression RPAREN compound_statements
+    (11) expression -> . expression OP_PLUS expression
+    (12) expression -> . expression OP_MINUS expression
+    (13) expression -> . expression OP_TIMES expression
+    (14) expression -> . expression OP_DIVIDE expression
+    (15) expression -> . expression OP_GT expression
+    (16) expression -> . ID
+    (17) expression -> . NUMBER
+    (18) expression -> . LPAREN expression RPAREN
+
+    ID              shift and go to state 16
+    NUMBER          shift and go to state 13
+    LPAREN          shift and go to state 14
+
+    expression                     shift and go to state 15
+
+state 11
+
+    (7) define_stmt -> VAR ID . OP_EQUAL NUMBER SEMICOLON
+
+    OP_EQUAL        shift and go to state 17
+
+
+state 12
+
+    (8) assign_stmt -> ID OP_EQUAL . expression SEMICOLON
+    (11) expression -> . expression OP_PLUS expression
+    (12) expression -> . expression OP_MINUS expression
+    (13) expression -> . expression OP_TIMES expression
+    (14) expression -> . expression OP_DIVIDE expression
+    (15) expression -> . expression OP_GT expression
+    (16) expression -> . ID
+    (17) expression -> . NUMBER
+    (18) expression -> . LPAREN expression RPAREN
+
+    ID              shift and go to state 16
+    NUMBER          shift and go to state 13
+    LPAREN          shift and go to state 14
+
+    expression                     shift and go to state 18
+
+state 13
+
+    (17) expression -> NUMBER .
+
+    RPAREN          reduce using rule 17 (expression -> NUMBER .)
+    OP_PLUS         reduce using rule 17 (expression -> NUMBER .)
+    OP_MINUS        reduce using rule 17 (expression -> NUMBER .)
+    OP_TIMES        reduce using rule 17 (expression -> NUMBER .)
+    OP_DIVIDE       reduce using rule 17 (expression -> NUMBER .)
+    OP_GT           reduce using rule 17 (expression -> NUMBER .)
+    SEMICOLON       reduce using rule 17 (expression -> NUMBER .)
+
+
+state 14
+
+    (18) expression -> LPAREN . expression RPAREN
+    (11) expression -> . expression OP_PLUS expression
+    (12) expression -> . expression OP_MINUS expression
+    (13) expression -> . expression OP_TIMES expression
+    (14) expression -> . expression OP_DIVIDE expression
+    (15) expression -> . expression OP_GT expression
+    (16) expression -> . ID
+    (17) expression -> . NUMBER
+    (18) expression -> . LPAREN expression RPAREN
+
+    ID              shift and go to state 16
+    NUMBER          shift and go to state 13
+    LPAREN          shift and go to state 14
+
+    expression                     shift and go to state 19
+
+state 15
+
+    (9) while_stmt -> WHILE LPAREN expression . RPAREN compound_statements
+    (11) expression -> expression . OP_PLUS expression
+    (12) expression -> expression . OP_MINUS expression
+    (13) expression -> expression . OP_TIMES expression
+    (14) expression -> expression . OP_DIVIDE expression
+    (15) expression -> expression . OP_GT expression
+
+    RPAREN          shift and go to state 21
+    OP_PLUS         shift and go to state 25
+    OP_MINUS        shift and go to state 22
+    OP_TIMES        shift and go to state 23
+    OP_DIVIDE       shift and go to state 20
+    OP_GT           shift and go to state 24
+
+
+state 16
+
+    (16) expression -> ID .
+
+    RPAREN          reduce using rule 16 (expression -> ID .)
+    OP_PLUS         reduce using rule 16 (expression -> ID .)
+    OP_MINUS        reduce using rule 16 (expression -> ID .)
+    OP_TIMES        reduce using rule 16 (expression -> ID .)
+    OP_DIVIDE       reduce using rule 16 (expression -> ID .)
+    OP_GT           reduce using rule 16 (expression -> ID .)
+    SEMICOLON       reduce using rule 16 (expression -> ID .)
+
+
+state 17
+
+    (7) define_stmt -> VAR ID OP_EQUAL . NUMBER SEMICOLON
+
+    NUMBER          shift and go to state 26
+
+
+state 18
+
+    (8) assign_stmt -> ID OP_EQUAL expression . SEMICOLON
+    (11) expression -> expression . OP_PLUS expression
+    (12) expression -> expression . OP_MINUS expression
+    (13) expression -> expression . OP_TIMES expression
+    (14) expression -> expression . OP_DIVIDE expression
+    (15) expression -> expression . OP_GT expression
+
+    SEMICOLON       shift and go to state 27
+    OP_PLUS         shift and go to state 25
+    OP_MINUS        shift and go to state 22
+    OP_TIMES        shift and go to state 23
+    OP_DIVIDE       shift and go to state 20
+    OP_GT           shift and go to state 24
+
+
+state 19
+
+    (18) expression -> LPAREN expression . RPAREN
+    (11) expression -> expression . OP_PLUS expression
+    (12) expression -> expression . OP_MINUS expression
+    (13) expression -> expression . OP_TIMES expression
+    (14) expression -> expression . OP_DIVIDE expression
+    (15) expression -> expression . OP_GT expression
+
+    RPAREN          shift and go to state 28
+    OP_PLUS         shift and go to state 25
+    OP_MINUS        shift and go to state 22
+    OP_TIMES        shift and go to state 23
+    OP_DIVIDE       shift and go to state 20
+    OP_GT           shift and go to state 24
+
+
+state 20
+
+    (14) expression -> expression OP_DIVIDE . expression
+    (11) expression -> . expression OP_PLUS expression
+    (12) expression -> . expression OP_MINUS expression
+    (13) expression -> . expression OP_TIMES expression
+    (14) expression -> . expression OP_DIVIDE expression
+    (15) expression -> . expression OP_GT expression
+    (16) expression -> . ID
+    (17) expression -> . NUMBER
+    (18) expression -> . LPAREN expression RPAREN
+
+    ID              shift and go to state 16
+    NUMBER          shift and go to state 13
+    LPAREN          shift and go to state 14
+
+    expression                     shift and go to state 29
+
+state 21
+
+    (9) while_stmt -> WHILE LPAREN expression RPAREN . compound_statements
+    (10) compound_statements -> . LBRACKET statements RBRACKET
+
+    LBRACKET        shift and go to state 30
+
+    compound_statements            shift and go to state 31
+
+state 22
+
+    (12) expression -> expression OP_MINUS . expression
+    (11) expression -> . expression OP_PLUS expression
+    (12) expression -> . expression OP_MINUS expression
+    (13) expression -> . expression OP_TIMES expression
+    (14) expression -> . expression OP_DIVIDE expression
+    (15) expression -> . expression OP_GT expression
+    (16) expression -> . ID
+    (17) expression -> . NUMBER
+    (18) expression -> . LPAREN expression RPAREN
+
+    ID              shift and go to state 16
+    NUMBER          shift and go to state 13
+    LPAREN          shift and go to state 14
+
+    expression                     shift and go to state 32
+
+state 23
+
+    (13) expression -> expression OP_TIMES . expression
+    (11) expression -> . expression OP_PLUS expression
+    (12) expression -> . expression OP_MINUS expression
+    (13) expression -> . expression OP_TIMES expression
+    (14) expression -> . expression OP_DIVIDE expression
+    (15) expression -> . expression OP_GT expression
+    (16) expression -> . ID
+    (17) expression -> . NUMBER
+    (18) expression -> . LPAREN expression RPAREN
+
+    ID              shift and go to state 16
+    NUMBER          shift and go to state 13
+    LPAREN          shift and go to state 14
+
+    expression                     shift and go to state 33
+
+state 24
+
+    (15) expression -> expression OP_GT . expression
+    (11) expression -> . expression OP_PLUS expression
+    (12) expression -> . expression OP_MINUS expression
+    (13) expression -> . expression OP_TIMES expression
+    (14) expression -> . expression OP_DIVIDE expression
+    (15) expression -> . expression OP_GT expression
+    (16) expression -> . ID
+    (17) expression -> . NUMBER
+    (18) expression -> . LPAREN expression RPAREN
+
+    ID              shift and go to state 16
+    NUMBER          shift and go to state 13
+    LPAREN          shift and go to state 14
+
+    expression                     shift and go to state 34
+
+state 25
+
+    (11) expression -> expression OP_PLUS . expression
+    (11) expression -> . expression OP_PLUS expression
+    (12) expression -> . expression OP_MINUS expression
+    (13) expression -> . expression OP_TIMES expression
+    (14) expression -> . expression OP_DIVIDE expression
+    (15) expression -> . expression OP_GT expression
+    (16) expression -> . ID
+    (17) expression -> . NUMBER
+    (18) expression -> . LPAREN expression RPAREN
+
+    ID              shift and go to state 16
+    NUMBER          shift and go to state 13
+    LPAREN          shift and go to state 14
+
+    expression                     shift and go to state 35
+
+state 26
+
+    (7) define_stmt -> VAR ID OP_EQUAL NUMBER . SEMICOLON
+
+    SEMICOLON       shift and go to state 36
+
+
+state 27
+
+    (8) assign_stmt -> ID OP_EQUAL expression SEMICOLON .
+
+    RBRACKET        reduce using rule 8 (assign_stmt -> ID OP_EQUAL expression SEMICOLON .)
+    WHILE           reduce using rule 8 (assign_stmt -> ID OP_EQUAL expression SEMICOLON .)
+    VAR             reduce using rule 8 (assign_stmt -> ID OP_EQUAL expression SEMICOLON .)
+    ID              reduce using rule 8 (assign_stmt -> ID OP_EQUAL expression SEMICOLON .)
+    $end            reduce using rule 8 (assign_stmt -> ID OP_EQUAL expression SEMICOLON .)
+
+
+state 28
+
+    (18) expression -> LPAREN expression RPAREN .
+
+    RPAREN          reduce using rule 18 (expression -> LPAREN expression RPAREN .)
+    OP_PLUS         reduce using rule 18 (expression -> LPAREN expression RPAREN .)
+    OP_MINUS        reduce using rule 18 (expression -> LPAREN expression RPAREN .)
+    OP_TIMES        reduce using rule 18 (expression -> LPAREN expression RPAREN .)
+    OP_DIVIDE       reduce using rule 18 (expression -> LPAREN expression RPAREN .)
+    OP_GT           reduce using rule 18 (expression -> LPAREN expression RPAREN .)
+    SEMICOLON       reduce using rule 18 (expression -> LPAREN expression RPAREN .)
+
+
+state 29
+
+    (14) expression -> expression OP_DIVIDE expression .
+    (11) expression -> expression . OP_PLUS expression
+    (12) expression -> expression . OP_MINUS expression
+    (13) expression -> expression . OP_TIMES expression
+    (14) expression -> expression . OP_DIVIDE expression
+    (15) expression -> expression . OP_GT expression
+
+    RPAREN          reduce using rule 14 (expression -> expression OP_DIVIDE expression .)
+    OP_PLUS         reduce using rule 14 (expression -> expression OP_DIVIDE expression .)
+    OP_MINUS        reduce using rule 14 (expression -> expression OP_DIVIDE expression .)
+    OP_TIMES        reduce using rule 14 (expression -> expression OP_DIVIDE expression .)
+    OP_DIVIDE       reduce using rule 14 (expression -> expression OP_DIVIDE expression .)
+    OP_GT           reduce using rule 14 (expression -> expression OP_DIVIDE expression .)
+    SEMICOLON       reduce using rule 14 (expression -> expression OP_DIVIDE expression .)
+
+  ! OP_PLUS         [ shift and go to state 25 ]
+  ! OP_MINUS        [ shift and go to state 22 ]
+  ! OP_TIMES        [ shift and go to state 23 ]
+  ! OP_DIVIDE       [ shift and go to state 20 ]
+  ! OP_GT           [ shift and go to state 24 ]
+
+
+state 30
+
+    (10) compound_statements -> LBRACKET . statements RBRACKET
+    (2) statements -> . statements statement
+    (3) statements -> .
+
+    RBRACKET        reduce using rule 3 (statements -> .)
+    WHILE           reduce using rule 3 (statements -> .)
+    VAR             reduce using rule 3 (statements -> .)
+    ID              reduce using rule 3 (statements -> .)
+
+    statements                     shift and go to state 37
+
+state 31
+
+    (9) while_stmt -> WHILE LPAREN expression RPAREN compound_statements .
+
+    WHILE           reduce using rule 9 (while_stmt -> WHILE LPAREN expression RPAREN compound_statements .)
+    VAR             reduce using rule 9 (while_stmt -> WHILE LPAREN expression RPAREN compound_statements .)
+    ID              reduce using rule 9 (while_stmt -> WHILE LPAREN expression RPAREN compound_statements .)
+    $end            reduce using rule 9 (while_stmt -> WHILE LPAREN expression RPAREN compound_statements .)
+    RBRACKET        reduce using rule 9 (while_stmt -> WHILE LPAREN expression RPAREN compound_statements .)
+
+
+state 32
+
+    (12) expression -> expression OP_MINUS expression .
+    (11) expression -> expression . OP_PLUS expression
+    (12) expression -> expression . OP_MINUS expression
+    (13) expression -> expression . OP_TIMES expression
+    (14) expression -> expression . OP_DIVIDE expression
+    (15) expression -> expression . OP_GT expression
+
+    RPAREN          reduce using rule 12 (expression -> expression OP_MINUS expression .)
+    OP_PLUS         reduce using rule 12 (expression -> expression OP_MINUS expression .)
+    OP_MINUS        reduce using rule 12 (expression -> expression OP_MINUS expression .)
+    OP_GT           reduce using rule 12 (expression -> expression OP_MINUS expression .)
+    SEMICOLON       reduce using rule 12 (expression -> expression OP_MINUS expression .)
+    OP_TIMES        shift and go to state 23
+    OP_DIVIDE       shift and go to state 20
+
+  ! OP_TIMES        [ reduce using rule 12 (expression -> expression OP_MINUS expression .) ]
+  ! OP_DIVIDE       [ reduce using rule 12 (expression -> expression OP_MINUS expression .) ]
+  ! OP_PLUS         [ shift and go to state 25 ]
+  ! OP_MINUS        [ shift and go to state 22 ]
+  ! OP_GT           [ shift and go to state 24 ]
+
+
+state 33
+
+    (13) expression -> expression OP_TIMES expression .
+    (11) expression -> expression . OP_PLUS expression
+    (12) expression -> expression . OP_MINUS expression
+    (13) expression -> expression . OP_TIMES expression
+    (14) expression -> expression . OP_DIVIDE expression
+    (15) expression -> expression . OP_GT expression
+
+    RPAREN          reduce using rule 13 (expression -> expression OP_TIMES expression .)
+    OP_PLUS         reduce using rule 13 (expression -> expression OP_TIMES expression .)
+    OP_MINUS        reduce using rule 13 (expression -> expression OP_TIMES expression .)
+    OP_TIMES        reduce using rule 13 (expression -> expression OP_TIMES expression .)
+    OP_DIVIDE       reduce using rule 13 (expression -> expression OP_TIMES expression .)
+    OP_GT           reduce using rule 13 (expression -> expression OP_TIMES expression .)
+    SEMICOLON       reduce using rule 13 (expression -> expression OP_TIMES expression .)
+
+  ! OP_PLUS         [ shift and go to state 25 ]
+  ! OP_MINUS        [ shift and go to state 22 ]
+  ! OP_TIMES        [ shift and go to state 23 ]
+  ! OP_DIVIDE       [ shift and go to state 20 ]
+  ! OP_GT           [ shift and go to state 24 ]
+
+
+state 34
+
+    (15) expression -> expression OP_GT expression .
+    (11) expression -> expression . OP_PLUS expression
+    (12) expression -> expression . OP_MINUS expression
+    (13) expression -> expression . OP_TIMES expression
+    (14) expression -> expression . OP_DIVIDE expression
+    (15) expression -> expression . OP_GT expression
+
+    RPAREN          reduce using rule 15 (expression -> expression OP_GT expression .)
+    OP_GT           reduce using rule 15 (expression -> expression OP_GT expression .)
+    SEMICOLON       reduce using rule 15 (expression -> expression OP_GT expression .)
+    OP_PLUS         shift and go to state 25
+    OP_MINUS        shift and go to state 22
+    OP_TIMES        shift and go to state 23
+    OP_DIVIDE       shift and go to state 20
+
+  ! OP_PLUS         [ reduce using rule 15 (expression -> expression OP_GT expression .) ]
+  ! OP_MINUS        [ reduce using rule 15 (expression -> expression OP_GT expression .) ]
+  ! OP_TIMES        [ reduce using rule 15 (expression -> expression OP_GT expression .) ]
+  ! OP_DIVIDE       [ reduce using rule 15 (expression -> expression OP_GT expression .) ]
+  ! OP_GT           [ shift and go to state 24 ]
+
+
+state 35
+
+    (11) expression -> expression OP_PLUS expression .
+    (11) expression -> expression . OP_PLUS expression
+    (12) expression -> expression . OP_MINUS expression
+    (13) expression -> expression . OP_TIMES expression
+    (14) expression -> expression . OP_DIVIDE expression
+    (15) expression -> expression . OP_GT expression
+
+    RPAREN          reduce using rule 11 (expression -> expression OP_PLUS expression .)
+    OP_PLUS         reduce using rule 11 (expression -> expression OP_PLUS expression .)
+    OP_MINUS        reduce using rule 11 (expression -> expression OP_PLUS expression .)
+    OP_GT           reduce using rule 11 (expression -> expression OP_PLUS expression .)
+    SEMICOLON       reduce using rule 11 (expression -> expression OP_PLUS expression .)
+    OP_TIMES        shift and go to state 23
+    OP_DIVIDE       shift and go to state 20
+
+  ! OP_TIMES        [ reduce using rule 11 (expression -> expression OP_PLUS expression .) ]
+  ! OP_DIVIDE       [ reduce using rule 11 (expression -> expression OP_PLUS expression .) ]
+  ! OP_PLUS         [ shift and go to state 25 ]
+  ! OP_MINUS        [ shift and go to state 22 ]
+  ! OP_GT           [ shift and go to state 24 ]
+
+
+state 36
+
+    (7) define_stmt -> VAR ID OP_EQUAL NUMBER SEMICOLON .
+
+    RBRACKET        reduce using rule 7 (define_stmt -> VAR ID OP_EQUAL NUMBER SEMICOLON .)
+    WHILE           reduce using rule 7 (define_stmt -> VAR ID OP_EQUAL NUMBER SEMICOLON .)
+    VAR             reduce using rule 7 (define_stmt -> VAR ID OP_EQUAL NUMBER SEMICOLON .)
+    ID              reduce using rule 7 (define_stmt -> VAR ID OP_EQUAL NUMBER SEMICOLON .)
+    $end            reduce using rule 7 (define_stmt -> VAR ID OP_EQUAL NUMBER SEMICOLON .)
+
+
+state 37
+
+    (10) compound_statements -> LBRACKET statements . RBRACKET
+    (2) statements -> statements . statement
+    (4) statement -> . while_stmt
+    (5) statement -> . define_stmt
+    (6) statement -> . assign_stmt
+    (9) while_stmt -> . WHILE LPAREN expression RPAREN compound_statements
+    (7) define_stmt -> . VAR ID OP_EQUAL NUMBER SEMICOLON
+    (8) assign_stmt -> . ID OP_EQUAL expression SEMICOLON
+
+    RBRACKET        shift and go to state 38
+    WHILE           shift and go to state 5
+    VAR             shift and go to state 7
+    ID              shift and go to state 9
+
+    define_stmt                    shift and go to state 4
+    assign_stmt                    shift and go to state 8
+    while_stmt                     shift and go to state 3
+    statement                      shift and go to state 6
+
+state 38
+
+    (10) compound_statements -> LBRACKET statements RBRACKET .
+
+    WHILE           reduce using rule 10 (compound_statements -> LBRACKET statements RBRACKET .)
+    VAR             reduce using rule 10 (compound_statements -> LBRACKET statements RBRACKET .)
+    ID              reduce using rule 10 (compound_statements -> LBRACKET statements RBRACKET .)
+    $end            reduce using rule 10 (compound_statements -> LBRACKET statements RBRACKET .)
+    RBRACKET        reduce using rule 10 (compound_statements -> LBRACKET statements RBRACKET .)
 
