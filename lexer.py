@@ -2,7 +2,8 @@ import ply.lex as lex
 
 # List of token names.   This is always required
 reserved = {
-    'while': 'WHILE'
+    'while': 'WHILE',
+    'var': 'VAR'
 }
 
 tokens = [
@@ -18,7 +19,7 @@ tokens = [
    'RPAREN',
    'LBRACKET',
    'RBRACKET',
-   'SEMICOLON'
+   'SEMICOLON',
 ] + list(reserved.values())
 
 # Regular expression rules for simple tokens
@@ -50,6 +51,10 @@ def t_newline(t):
     r'\n+'
     t.lexer.lineno += len(t.value)
 
+def t_comment(t):
+    r'//.*\n'
+
+
 # A string containing ignored characters (spaces and tabs)
 t_ignore  = ' \t'
 
@@ -58,23 +63,6 @@ def t_error(t):
     print("Illegal character '%s'" % t.value[0])
     t.lexer.skip(1)
 
-# Build the lexer
-lexer = lex.lex()
-
-
-# Test it out
-data = '''
-n = 5;
-p = 1;
-while(n > 0)
-{
-  p = p * n;
-  n = n - 1;
-}
-'''
-
-# Give the lexer some input
-lexer.input(data)
 
 # Compute column
 def find_column(input, token):
@@ -84,9 +72,14 @@ def find_column(input, token):
     column = token.lexpos - last_cr - 1
     return column
 
-# Tokenize
-while True:
-    tok = lexer.token()
-    if not tok: 
-        break      # No more input
-    print tok, find_column(data, tok)
+lexer = lex.lex()
+
+#Tokenize
+if __name__ == '__main__':
+  import testcases
+  lexer.input(testcases.data)
+  while True:
+      tok = lexer.token()
+      if not tok: 
+          break      # No more input
+      print(tok, find_column(testcases.data, tok))
