@@ -87,24 +87,20 @@ state 2
     (8) assign_stmt -> . ID OP_EQUAL expression SEMICOLON
 
     $end            reduce using rule 1 (program -> statements .)
-    WHILE           shift and go to state 5
+    WHILE           shift and go to state 3
     VAR             shift and go to state 7
     ID              shift and go to state 9
 
     define_stmt                    shift and go to state 4
     assign_stmt                    shift and go to state 8
-    while_stmt                     shift and go to state 3
+    while_stmt                     shift and go to state 5
     statement                      shift and go to state 6
 
 state 3
 
-    (4) statement -> while_stmt .
+    (9) while_stmt -> WHILE . LPAREN expression RPAREN compound_statements
 
-    RBRACKET        reduce using rule 4 (statement -> while_stmt .)
-    WHILE           reduce using rule 4 (statement -> while_stmt .)
-    VAR             reduce using rule 4 (statement -> while_stmt .)
-    ID              reduce using rule 4 (statement -> while_stmt .)
-    $end            reduce using rule 4 (statement -> while_stmt .)
+    LPAREN          shift and go to state 10
 
 
 state 4
@@ -120,9 +116,13 @@ state 4
 
 state 5
 
-    (9) while_stmt -> WHILE . LPAREN expression RPAREN compound_statements
+    (4) statement -> while_stmt .
 
-    LPAREN          shift and go to state 10
+    RBRACKET        reduce using rule 4 (statement -> while_stmt .)
+    WHILE           reduce using rule 4 (statement -> while_stmt .)
+    VAR             reduce using rule 4 (statement -> while_stmt .)
+    ID              reduce using rule 4 (statement -> while_stmt .)
+    $end            reduce using rule 4 (statement -> while_stmt .)
 
 
 state 6
@@ -603,13 +603,13 @@ state 37
     (8) assign_stmt -> . ID OP_EQUAL expression SEMICOLON
 
     RBRACKET        shift and go to state 38
-    WHILE           shift and go to state 5
+    WHILE           shift and go to state 3
     VAR             shift and go to state 7
     ID              shift and go to state 9
 
     define_stmt                    shift and go to state 4
     assign_stmt                    shift and go to state 8
-    while_stmt                     shift and go to state 3
+    while_stmt                     shift and go to state 5
     statement                      shift and go to state 6
 
 state 38

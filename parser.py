@@ -1,6 +1,9 @@
 import ply.yacc as yacc
 import testcases
 from lexer import tokens
+from environment import Environment
+
+env = Environment()
 
 def p_program(p):
   "program : statements"
@@ -22,11 +25,14 @@ def p_statement(p):
 
 def p_define(p):
   "define_stmt : VAR ID OP_EQUAL NUMBER SEMICOLON"
-  p[0] = ' '.join([p[1], p[2], p[3], str(p[4]), p[5]])
+  env.set(p[2], p[4])
+  print env
 
 def p_assign(p):
   "assign_stmt : ID OP_EQUAL expression SEMICOLON"
-  p[0] = p[2]
+  env.set(p[1], p[3])
+  print env
+  p[0] = p[3]
 
 def p_while(p):
   "while_stmt : WHILE LPAREN expression RPAREN compound_statements"
@@ -36,7 +42,6 @@ def p_compound_statements(p):
   "compound_statements : LBRACKET statements RBRACKET"
 
 def p_expression_bin_op(p):
-  # "expression : expression binary_op expression"
   """expression : expression OP_PLUS expression
                 | expression OP_MINUS expression
                 | expression OP_TIMES expression
@@ -56,17 +61,8 @@ def p_expression_expr(p):
   "expression : LPAREN expression RPAREN"
   p[0] = p[2]
 
-# def p_binary_op(p):
-#   """binary_op : OP_PLUS
-#                | OP_MINUS
-#                | OP_TIMES
-#                | OP_DIVIDE
-#                | OP_GT"""
-#   p[0] = p[1]
-#   print p[1]
-
 precedence = (
-    ('left', 'OP_GT'),
+    ('nonassoc', 'OP_GT'),
     ('left', 'OP_PLUS', 'OP_MINUS'),
     ('left', 'OP_TIMES', 'OP_DIVIDE'),
 )
