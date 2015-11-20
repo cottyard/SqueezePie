@@ -1,10 +1,7 @@
 import ply.yacc as yacc
 import testcases
 from lexer import tokens
-from environment import Environment
 from representation import *
-
-global_env = Environment()
 
 def p_program(p):
   "program : statements"
@@ -22,7 +19,8 @@ def p_empty_statements(p):
 def p_statement(p):
   """statement : while_stmt
                | define_stmt
-               | assign_stmt"""
+               | assign_stmt
+               | expression SEMICOLON"""
   p[0] = p[1]
 
 def p_define(p):
@@ -48,19 +46,43 @@ def p_expression_bin_op(p):
                 | expression OP_DIVIDE expression
                 | expression OP_GT expression
   """
-  p[0] = BinaryOpExpr(p[2], p[1], p[3])
+  p[0] = BinaryOp(p[2], p[1], p[3])
 
 def p_expression_id(p):
   "expression : ID"
-  p[0] = IdentifierExpr(p[1])
+  p[0] = Identifier(p[1])
 
 def p_term_factor(p):
   "expression : NUMBER"
-  p[0] = NumberExpr(p[1])
+  p[0] = Number(p[1])
 
 def p_expression_expr(p):
   "expression : LPAREN expression RPAREN"
   p[0] = p[2]
+
+def p_expression_func_call(p):
+  "expression : function_call"
+  p[0] = p[1]
+
+def p_func_call(p):
+  "function_call : ID LPAREN arguments RPAREN"
+  p[0] = FunctionCall(p[1], p[3])
+
+def p_arguments(p):
+  "arguments : argument arguments_rest"
+  p[0] = [p[1]] + p[2]
+
+def p_arguments_rest(p):
+  "arguments_rest : COMMA argument arguments_rest"
+  p[0] = [p[2]] + p[3]
+
+def p_arguments_rest_empty(p):
+  "arguments_rest :"
+  p[0] = []
+
+def p_argument(p):
+  "argument : expression"
+  p[0] = p[1]
 
 precedence = (
     ('nonassoc', 'OP_GT'),
@@ -83,7 +105,3 @@ parser = yacc.yacc()
    #     break
    # if not s:
    #     continue
-result = parser.parse(testcases.data)
-print(result)
-result.execute(global_env)
-print(global_env)

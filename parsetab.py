@@ -5,9 +5,9 @@ _tabversion = '3.8'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'D445E826209FB6B9D69FC0A5EAF1DE23'
+_lr_signature = '08D51B0151988B735A2C5802C5D27D80'
     
-_lr_action_items = {'OP_DIVIDE':([13,15,16,18,19,28,29,32,33,34,35,],[-17,20,-16,20,20,-18,-14,20,-13,20,20,]),'RPAREN':([13,15,16,19,28,29,32,33,34,35,],[-17,21,-16,28,-18,-14,-12,-13,-15,-11,]),'SEMICOLON':([13,16,18,26,28,29,32,33,34,35,],[-17,-16,27,36,-18,-14,-12,-13,-15,-11,]),'OP_MINUS':([13,15,16,18,19,28,29,32,33,34,35,],[-17,22,-16,22,22,-18,-14,-12,-13,22,-11,]),'OP_TIMES':([13,15,16,18,19,28,29,32,33,34,35,],[-17,23,-16,23,23,-18,-14,23,-13,23,23,]),'OP_GT':([13,15,16,18,19,28,29,32,33,34,35,],[-17,24,-16,24,24,-18,-14,-12,-13,None,-11,]),'NUMBER':([10,12,14,17,20,22,23,24,25,],[13,13,13,26,13,13,13,13,13,]),'OP_PLUS':([13,15,16,18,19,28,29,32,33,34,35,],[-17,25,-16,25,25,-18,-14,-12,-13,25,-11,]),'LBRACKET':([21,],[30,]),'OP_EQUAL':([9,11,],[12,17,]),'WHILE':([0,2,4,5,6,8,27,30,31,36,37,38,],[-3,3,-5,-4,-2,-6,-8,-3,-9,-7,3,-10,]),'LPAREN':([3,10,12,14,20,22,23,24,25,],[10,14,14,14,14,14,14,14,14,]),'VAR':([0,2,4,5,6,8,27,30,31,36,37,38,],[-3,7,-5,-4,-2,-6,-8,-3,-9,-7,7,-10,]),'RBRACKET':([4,5,6,8,27,30,31,36,37,38,],[-5,-4,-2,-6,-8,-3,-9,-7,38,-10,]),'ID':([0,2,4,5,6,7,8,10,12,14,20,22,23,24,25,27,30,31,36,37,38,],[-3,9,-5,-4,-2,11,-6,16,16,16,16,16,16,16,16,-8,-3,-9,-7,9,-10,]),'$end':([0,1,2,4,5,6,8,27,31,36,38,],[-3,0,-1,-5,-4,-2,-6,-8,-9,-7,-10,]),}
+_lr_action_items = {'OP_DIVIDE':([3,4,11,13,16,17,27,28,31,32,33,34,35,36,37,42,],[-18,-20,-17,20,20,-17,20,-19,20,20,-15,20,-14,20,20,-21,]),'RPAREN':([3,4,16,17,27,28,29,30,31,33,34,35,36,37,41,42,47,49,],[-18,-20,28,-17,39,-19,-24,42,-25,-15,-13,-14,-16,-12,-22,-21,-24,-23,]),'SEMICOLON':([3,4,11,13,17,28,32,33,34,35,36,37,38,42,],[-18,-20,-17,21,-17,-19,43,-15,-13,-14,-16,-12,44,-21,]),'OP_MINUS':([3,4,11,13,16,17,27,28,31,32,33,34,35,36,37,42,],[-18,-20,-17,22,22,-17,22,-19,22,22,-15,-13,-14,22,-12,-21,]),'OP_TIMES':([3,4,11,13,16,17,27,28,31,32,33,34,35,36,37,42,],[-18,-20,-17,23,23,-17,23,-19,23,23,-15,23,-14,23,23,-21,]),'OP_GT':([3,4,11,13,16,17,27,28,31,32,33,34,35,36,37,42,],[-18,-20,-17,24,24,-17,24,-19,24,24,-15,-13,-14,None,-12,-21,]),'NUMBER':([0,2,7,8,9,10,12,15,18,19,20,21,22,23,24,25,26,40,43,44,45,46,48,50,],[-3,3,-5,-6,-2,3,-4,3,3,3,3,-7,3,3,3,3,38,3,-9,-8,-3,-10,3,-11,]),'OP_PLUS':([3,4,11,13,16,17,27,28,31,32,33,34,35,36,37,42,],[-18,-20,-17,25,25,-17,25,-19,25,25,-15,-13,-14,25,-12,-21,]),'LBRACKET':([39,],[45,]),'OP_EQUAL':([11,14,],[19,26,]),'WHILE':([0,2,7,8,9,12,21,43,44,45,46,48,50,],[-3,6,-5,-6,-2,-4,-7,-9,-8,-3,-10,6,-11,]),'COMMA':([3,4,17,28,29,31,33,34,35,36,37,42,47,],[-18,-20,-17,-19,40,-25,-15,-13,-14,-16,-12,-21,40,]),'LPAREN':([0,2,6,7,8,9,10,11,12,15,17,18,19,20,21,22,23,24,25,40,43,44,45,46,48,50,],[-3,10,15,-5,-6,-2,10,18,-4,10,18,10,10,10,-7,10,10,10,10,10,-9,-8,-3,-10,10,-11,]),'VAR':([0,2,7,8,9,12,21,43,44,45,46,48,50,],[-3,5,-5,-6,-2,-4,-7,-9,-8,-3,-10,5,-11,]),'RBRACKET':([7,8,9,12,21,43,44,45,46,48,50,],[-5,-6,-2,-4,-7,-9,-8,-3,-10,50,-11,]),'ID':([0,2,5,7,8,9,10,12,15,18,19,20,21,22,23,24,25,40,43,44,45,46,48,50,],[-3,11,14,-5,-6,-2,17,-4,17,17,17,17,-7,17,17,17,17,17,-9,-8,-3,-10,11,-11,]),'$end':([0,1,2,7,8,9,12,21,43,44,46,50,],[-3,0,-1,-5,-6,-2,-4,-7,-9,-8,-10,-11,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -16,7 +16,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'statements':([0,30,],[2,37,]),'define_stmt':([2,37,],[4,4,]),'assign_stmt':([2,37,],[8,8,]),'while_stmt':([2,37,],[5,5,]),'program':([0,],[1,]),'statement':([2,37,],[6,6,]),'expression':([10,12,14,20,22,23,24,25,],[15,18,19,29,32,33,34,35,]),'compound_statements':([21,],[31,]),}
+_lr_goto_items = {'statements':([0,45,],[2,48,]),'argument':([18,40,],[29,47,]),'define_stmt':([2,48,],[7,7,]),'function_call':([2,10,15,18,19,20,22,23,24,25,40,48,],[4,4,4,4,4,4,4,4,4,4,4,4,]),'assign_stmt':([2,48,],[8,8,]),'while_stmt':([2,48,],[12,12,]),'program':([0,],[1,]),'arguments':([18,],[30,]),'statement':([2,48,],[9,9,]),'arguments_rest':([29,47,],[41,49,]),'expression':([2,10,15,18,19,20,22,23,24,25,40,48,],[13,16,27,31,32,33,34,35,36,37,31,13,]),'compound_statements':([39,],[46,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -26,22 +26,29 @@ for _k, _v in _lr_goto_items.items():
 del _lr_goto_items
 _lr_productions = [
   ("S' -> program","S'",1,None,None,None),
-  ('program -> statements','program',1,'p_program','parser.py',6),
-  ('statements -> statements statement','statements',2,'p_statements','parser.py',10),
-  ('statements -> <empty>','statements',0,'p_empty_statements','parser.py',14),
-  ('statement -> while_stmt','statement',1,'p_statement','parser.py',18),
-  ('statement -> define_stmt','statement',1,'p_statement','parser.py',19),
-  ('statement -> assign_stmt','statement',1,'p_statement','parser.py',20),
-  ('define_stmt -> VAR ID OP_EQUAL NUMBER SEMICOLON','define_stmt',5,'p_define','parser.py',24),
-  ('assign_stmt -> ID OP_EQUAL expression SEMICOLON','assign_stmt',4,'p_assign','parser.py',28),
-  ('while_stmt -> WHILE LPAREN expression RPAREN compound_statements','while_stmt',5,'p_while','parser.py',32),
-  ('compound_statements -> LBRACKET statements RBRACKET','compound_statements',3,'p_compound_statements','parser.py',36),
-  ('expression -> expression OP_PLUS expression','expression',3,'p_expression_bin_op','parser.py',39),
-  ('expression -> expression OP_MINUS expression','expression',3,'p_expression_bin_op','parser.py',40),
-  ('expression -> expression OP_TIMES expression','expression',3,'p_expression_bin_op','parser.py',41),
-  ('expression -> expression OP_DIVIDE expression','expression',3,'p_expression_bin_op','parser.py',42),
-  ('expression -> expression OP_GT expression','expression',3,'p_expression_bin_op','parser.py',43),
-  ('expression -> ID','expression',1,'p_expression_id','parser.py',48),
-  ('expression -> NUMBER','expression',1,'p_term_factor','parser.py',51),
-  ('expression -> LPAREN expression RPAREN','expression',3,'p_expression_expr','parser.py',55),
+  ('program -> statements','program',1,'p_program','parser.py',7),
+  ('statements -> statements statement','statements',2,'p_statements','parser.py',11),
+  ('statements -> <empty>','statements',0,'p_empty_statements','parser.py',16),
+  ('statement -> while_stmt','statement',1,'p_statement','parser.py',20),
+  ('statement -> define_stmt','statement',1,'p_statement','parser.py',21),
+  ('statement -> assign_stmt','statement',1,'p_statement','parser.py',22),
+  ('statement -> expression SEMICOLON','statement',2,'p_statement','parser.py',23),
+  ('define_stmt -> VAR ID OP_EQUAL NUMBER SEMICOLON','define_stmt',5,'p_define','parser.py',27),
+  ('assign_stmt -> ID OP_EQUAL expression SEMICOLON','assign_stmt',4,'p_assign','parser.py',31),
+  ('while_stmt -> WHILE LPAREN expression RPAREN compound_statements','while_stmt',5,'p_while','parser.py',35),
+  ('compound_statements -> LBRACKET statements RBRACKET','compound_statements',3,'p_compound_statements','parser.py',39),
+  ('expression -> expression OP_PLUS expression','expression',3,'p_expression_bin_op','parser.py',43),
+  ('expression -> expression OP_MINUS expression','expression',3,'p_expression_bin_op','parser.py',44),
+  ('expression -> expression OP_TIMES expression','expression',3,'p_expression_bin_op','parser.py',45),
+  ('expression -> expression OP_DIVIDE expression','expression',3,'p_expression_bin_op','parser.py',46),
+  ('expression -> expression OP_GT expression','expression',3,'p_expression_bin_op','parser.py',47),
+  ('expression -> ID','expression',1,'p_expression_id','parser.py',52),
+  ('expression -> NUMBER','expression',1,'p_term_factor','parser.py',56),
+  ('expression -> LPAREN expression RPAREN','expression',3,'p_expression_expr','parser.py',60),
+  ('expression -> function_call','expression',1,'p_expression_func_call','parser.py',64),
+  ('function_call -> ID LPAREN arguments RPAREN','function_call',4,'p_func_call','parser.py',68),
+  ('arguments -> argument arguments_rest','arguments',2,'p_arguments','parser.py',72),
+  ('arguments_rest -> COMMA argument arguments_rest','arguments_rest',3,'p_arguments_rest','parser.py',76),
+  ('arguments_rest -> <empty>','arguments_rest',0,'p_arguments_rest_empty','parser.py',80),
+  ('argument -> expression','argument',1,'p_argument','parser.py',84),
 ]

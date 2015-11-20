@@ -1,3 +1,5 @@
+from apply import apply
+
 class Program:
   def __init__(self, statements):
     self.statements = statements
@@ -37,38 +39,30 @@ class AssignStmt:
 
 
 class Expression:
-  pass
+  def execute(self, env):
+    self.evaluate(env)
 
 
-class BinaryOpExpr(Expression):
+class FunctionCall(Expression):
+  def __init__(self, id, arguments):
+    self.id = id
+    self.arguments = arguments
+
+  def evaluate(self, env):
+    return apply(self.id, self.arguments, env)
+
+
+class BinaryOp(Expression):
   def __init__(self, op, left, right):
     self.op = op
     self.left = left
     self.right = right
 
-  def find_impl(self, op):
-    def times(o1, o2):
-      return o1 * o2
-
-    def minus(o1, o2):
-      return o1 - o2
-
-    def greater_than(o1, o2):
-      return o1 > o2
-
-    return {
-      '*': times,
-      '-': minus,
-      '>': greater_than
-    }[op]
-
   def evaluate(self, env):
-    return self.find_impl(self.op)(
-      self.left.evaluate(env), 
-      self.right.evaluate(env))
+    return apply(self.op, [self.left, self.right], env)
 
 
-class IdentifierExpr(Expression):
+class Identifier(Expression):
   def __init__(self, id):
     self.id = id
 
@@ -76,7 +70,7 @@ class IdentifierExpr(Expression):
     return env.lookup(self.id)
 
 
-class NumberExpr(Expression):
+class Number(Expression):
   def __init__(self, num):
     self.num = num
 

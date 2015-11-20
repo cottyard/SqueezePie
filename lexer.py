@@ -20,6 +20,7 @@ tokens = [
    'LBRACKET',
    'RBRACKET',
    'SEMICOLON',
+   'COMMA'
 ] + list(reserved.values())
 
 # Regular expression rules for simple tokens
@@ -30,6 +31,7 @@ t_OP_DIVIDE  = r'/'
 t_OP_EQUAL = r'='
 t_OP_GT = r'>'
 t_SEMICOLON = r';'
+t_COMMA = r','
 t_LPAREN  = r'\('
 t_RPAREN  = r'\)'
 t_LBRACKET = r'\{'
