@@ -1,4 +1,4 @@
-from pie_excep import PieUnresolvedSymbol
+from excep import PieUnresolvedSymbol
 
 class Environment:
     def __init__(self, dict={}, parent=None):

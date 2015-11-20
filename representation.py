@@ -1,5 +1,5 @@
 import runtime
-from pie_excep import ReturnControl
+from excep import ReturnControl
 
 class Program:
   def __init__(self, statements):

@@ -1,5 +1,5 @@
 import builtin
-from pie_excep import PieUnresolvedSymbol, ReturnControl
+from excep import PieUnresolvedSymbol, ReturnControl
 
 def apply(id, arguments, env):
   try:
