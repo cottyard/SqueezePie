@@ -3,7 +3,9 @@ import ply.lex as lex
 # List of token names.   This is always required
 reserved = {
     'while': 'WHILE',
-    'var': 'VAR'
+    'var': 'VAR',
+    'function': 'FUNCTION',
+    'return': 'RETURN'
 }
 
 tokens = [

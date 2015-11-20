@@ -9,9 +9,9 @@ while(n > 0)
 log(p, n);
 '''
 
-# case_function = '''
-# var inc = function(a) {
-#   return a + 1;
-# }
-# log(inc(1))
-# '''
+case_function = '''
+var inc = function(a) {
+  return a + 1;
+};
+log(inc(1));
+'''

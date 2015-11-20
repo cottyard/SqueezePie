@@ -1,4 +1,5 @@
-from apply import apply
+import runtime
+from pie_excep import ReturnControl
 
 class Program:
   def __init__(self, statements):
@@ -10,12 +11,12 @@ class Program:
 
 
 class DefineStmt:
-  def __init__(self, var_id_literal, var_value):
+  def __init__(self, var_id_literal, var_value_expr):
     self.var_id_literal = var_id_literal
-    self.var_value = var_value
+    self.var_value_expr = var_value_expr
 
   def execute(self, env):
-    env.set(self.var_id_literal, self.var_value)
+    env.set(self.var_id_literal, self.var_value_expr.evaluate(env))
 
 
 class WhileStmt:
@@ -38,6 +39,14 @@ class AssignStmt:
     env.set(self.var_id_literal, self.var_value_expr.evaluate(env))
 
 
+class ReturnStmt:
+  def __init__(self, expr=None):
+    self.expr = expr
+
+  def execute(self, env):
+    raise ReturnControl(self.expr)
+
+
 class Expression:
   def execute(self, env):
     self.evaluate(env)
@@ -49,7 +58,16 @@ class FunctionCall(Expression):
     self.arguments = arguments
 
   def evaluate(self, env):
-    return apply(self.id, self.arguments, env)
+    return runtime.apply(self.id, self.arguments, env)
+
+
+class FunctionDecl(Expression):
+  def __init__(self, params, body):
+    self.params = params
+    self.body = body
+
+  def evaluate(self, env):
+    return runtime.function(self.params, self.body)
 
 
 class BinaryOp(Expression):
@@ -59,7 +77,7 @@ class BinaryOp(Expression):
     self.right = right
 
   def evaluate(self, env):
-    return apply(self.op, [self.left, self.right], env)
+    return runtime.apply(self.op, [self.left, self.right], env)
 
 
 class Identifier(Expression):

@@ -1,9 +1,15 @@
 def find(id):
-    def times(o1, o2):
-      return o1 * o2
+    def plus(o1, o2):
+      return o1 + o2
 
     def minus(o1, o2):
       return o1 - o2
+
+    def times(o1, o2):
+      return o1 * o2
+
+    def divide(o1, o2):
+      return o1 / o2
 
     def greater_than(o1, o2):
       return o1 > o2
@@ -13,8 +19,10 @@ def find(id):
         print o,
 
     return {
-      '*': times,
+      '+': plus,
       '-': minus,
+      '*': times,
+      '/': divide,
       '>': greater_than,
       'log': log
     }[id]

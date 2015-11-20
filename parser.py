@@ -12,7 +12,7 @@ def p_statements(p):
   p[1].append(p[2])
   p[0] = p[1]
 
-def p_empty_statements(p):
+def p_statements_empty(p):
   "statements :"
   p[0] = []
 
@@ -20,11 +20,13 @@ def p_statement(p):
   """statement : while_stmt
                | define_stmt
                | assign_stmt
-               | expression SEMICOLON"""
+               | expression SEMICOLON
+               | return_stmt
+  """
   p[0] = p[1]
 
 def p_define(p):
-  "define_stmt : VAR ID OP_EQUAL NUMBER SEMICOLON"
+  "define_stmt : VAR ID OP_EQUAL expression SEMICOLON"
   p[0] = DefineStmt(p[2], p[4])
 
 def p_assign(p):
@@ -35,6 +37,14 @@ def p_while(p):
   "while_stmt : WHILE LPAREN expression RPAREN compound_statements"
   p[0] = WhileStmt(p[3], p[5])
   
+def p_return_none(p):
+  "return_stmt : RETURN SEMICOLON"
+  p[0] = ReturnStmt()
+
+def p_return(p):
+  "return_stmt : RETURN expression SEMICOLON"
+  p[0] = ReturnStmt(p[2])
+
 def p_compound_statements(p):
   "compound_statements : LBRACKET statements RBRACKET"
   p[0] = p[2]
@@ -61,7 +71,9 @@ def p_expression_expr(p):
   p[0] = p[2]
 
 def p_expression_func_call(p):
-  "expression : function_call"
+  """expression : function_call
+                | function_decl
+  """
   p[0] = p[1]
 
 def p_func_call(p):
@@ -84,16 +96,34 @@ def p_argument(p):
   "argument : expression"
   p[0] = p[1]
 
+def p_func_decl(p):
+  "function_decl : FUNCTION LPAREN parameters RPAREN compound_statements"
+  p[0] = FunctionDecl(p[3], p[5])
+
+def p_parameters(p):
+  "parameters : parameter parameters_rest"
+  p[0] = [p[1]] + p[2]
+
+def p_parameters_rest(p):
+  "parameters_rest : COMMA parameter parameters_rest"
+  p[0] = [p[2]] + p[3]
+
+def p_parameters_rest_empty(p):
+  "parameters_rest :"
+  p[0] = []
+
+def p_parameter(p):
+  "parameter : ID"
+  p[0] = p[1]
+
 precedence = (
     ('nonassoc', 'OP_GT'),
     ('left', 'OP_PLUS', 'OP_MINUS'),
     ('left', 'OP_TIMES', 'OP_DIVIDE'),
 )
 
-#def p_error(p):
-    #print("Syntax error in input!")
-#    pass
-
+def p_error(p):
+    print("Syntax error with", p)
 
 # Build the parser
 parser = yacc.yacc()

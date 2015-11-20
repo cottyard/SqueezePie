@@ -1,3 +1,5 @@
+from pie_excep import PieUnresolvedSymbol
+
 class Environment:
     def __init__(self, dict={}, parent=None):
         self.env = dict
@@ -11,7 +13,7 @@ class Environment:
             return self.env
         else:
             if self.parent is None:
-                raise PieUnresolvedSymbolError(symbol)
+                raise PieUnresolvedSymbol(symbol)
             return self.parent.find_env(symbol)
 
     def set(self, name, value):
