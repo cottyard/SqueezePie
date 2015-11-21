@@ -97,6 +97,10 @@ def p_func_call(p):
   "function_call : expression LPAREN arguments RPAREN"
   p[0] = FunctionCall(p[1], p[3])
 
+def p_arguments_empty(p):
+  "arguments :"
+  p[0] = []
+
 def p_arguments(p):
   "arguments : argument arguments_rest"
   p[0] = [p[1]] + p[2]
@@ -141,7 +145,7 @@ precedence = (
 )
 
 def p_error(p):
-    print("Syntax error with", p)
+    print "Syntax error with", p
 
 # Build the parser
 parser = yacc.yacc()

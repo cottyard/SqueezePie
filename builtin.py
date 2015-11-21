@@ -16,5 +16,6 @@ built_ins = {
   '==': operator.eq,
   'log': log,
   'true': True,
-  'false': False
+  'false': False,
+  'exit': exit
 }

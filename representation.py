@@ -7,8 +7,10 @@ class Program:
     self.statements = statements
 
   def execute(self, env):
+    ret = None
     for s in self.statements:
-      s.execute(env)
+      ret = s.execute(env)
+    return ret
 
   def __str__(self):
     return '\n'.join([str(s) for s in self.statements])
@@ -87,7 +89,7 @@ class IfStmt(Statement):
 
 class Expression:
   def execute(self, env):
-    self.evaluate(env)
+    return self.evaluate(env)
 
   def __repr__(self):
     return str(self)

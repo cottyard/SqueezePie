@@ -36,25 +36,26 @@ Rule 30    expression -> LPAREN expression RPAREN
 Rule 31    expression -> function_call
 Rule 32    expression -> function_decl
 Rule 33    function_call -> expression LPAREN arguments RPAREN
-Rule 34    arguments -> argument arguments_rest
-Rule 35    arguments_rest -> COMMA argument arguments_rest
-Rule 36    arguments_rest -> <empty>
-Rule 37    argument -> expression
-Rule 38    function_decl -> FUNCTION LPAREN parameters RPAREN compound_statements
-Rule 39    parameters -> parameter parameters_rest
-Rule 40    parameters_rest -> COMMA parameter parameters_rest
-Rule 41    parameters_rest -> <empty>
-Rule 42    parameter -> ID
+Rule 34    arguments -> <empty>
+Rule 35    arguments -> argument arguments_rest
+Rule 36    arguments_rest -> COMMA argument arguments_rest
+Rule 37    arguments_rest -> <empty>
+Rule 38    argument -> expression
+Rule 39    function_decl -> FUNCTION LPAREN parameters RPAREN compound_statements
+Rule 40    parameters -> parameter parameters_rest
+Rule 41    parameters_rest -> COMMA parameter parameters_rest
+Rule 42    parameters_rest -> <empty>
+Rule 43    parameter -> ID
 
 Terminals, with rules where they appear
 
-COMMA                : 35 40
+COMMA                : 36 41
 ELSE                 : 17
-FUNCTION             : 38
-ID                   : 10 11 28 42
+FUNCTION             : 39
+ID                   : 10 11 28 43
 IF                   : 15
 LBRACKET             : 18
-LPAREN               : 12 15 30 33 38
+LPAREN               : 12 15 30 33 39
 NUMBER               : 29
 OP_DIVIDE            : 22
 OP_EQ                : 27
@@ -68,7 +69,7 @@ OP_PLUS              : 19
 OP_TIMES             : 21
 RBRACKET             : 18
 RETURN               : 13 14
-RPAREN               : 12 15 30 33 38
+RPAREN               : 12 15 30 33 39
 SEMICOLON            : 7 10 11 13 14
 VAR                  : 10
 WHILE                : 12
@@ -76,20 +77,20 @@ error                :
 
 Nonterminals, with rules where they appear
 
-argument             : 34 35
+argument             : 35 36
 arguments            : 33
-arguments_rest       : 34 35
+arguments_rest       : 35 36
 assign_stmt          : 6
-compound_statements  : 12 15 17 38
+compound_statements  : 12 15 17 39
 define_stmt          : 5
 else_clause          : 15
-expression           : 7 10 11 12 14 15 19 19 20 20 21 21 22 22 23 23 24 24 25 25 26 26 27 27 30 33 37
+expression           : 7 10 11 12 14 15 19 19 20 20 21 21 22 22 23 23 24 24 25 25 26 26 27 27 30 33 38
 function_call        : 31
 function_decl        : 32
 if_stmt              : 9
-parameter            : 39 40
-parameters           : 38
-parameters_rest      : 39 40
+parameter            : 40 41
+parameters           : 39
+parameters_rest      : 40 41
 program              : 0
 return_stmt          : 8
 statement            : 2
@@ -155,7 +156,7 @@ state 2
     (14) return_stmt -> . RETURN expression SEMICOLON
     (15) if_stmt -> . IF LPAREN expression RPAREN compound_statements else_clause
     (33) function_call -> . expression LPAREN arguments RPAREN
-    (38) function_decl -> . FUNCTION LPAREN parameters RPAREN compound_statements
+    (39) function_decl -> . FUNCTION LPAREN parameters RPAREN compound_statements
 
     $end            reduce using rule 1 (program -> statements .)
     WHILE           shift and go to state 5
@@ -245,7 +246,7 @@ state 7
     (31) expression -> . function_call
     (32) expression -> . function_decl
     (33) function_call -> . expression LPAREN arguments RPAREN
-    (38) function_decl -> . FUNCTION LPAREN parameters RPAREN compound_statements
+    (39) function_decl -> . FUNCTION LPAREN parameters RPAREN compound_statements
 
     SEMICOLON       shift and go to state 23
     ID              shift and go to state 22
@@ -307,7 +308,7 @@ state 10
 
 state 11
 
-    (38) function_decl -> FUNCTION . LPAREN parameters RPAREN compound_statements
+    (39) function_decl -> FUNCTION . LPAREN parameters RPAREN compound_statements
 
     LPAREN          shift and go to state 25
 
@@ -349,7 +350,7 @@ state 13
     (31) expression -> . function_call
     (32) expression -> . function_decl
     (33) function_call -> . expression LPAREN arguments RPAREN
-    (38) function_decl -> . FUNCTION LPAREN parameters RPAREN compound_statements
+    (39) function_decl -> . FUNCTION LPAREN parameters RPAREN compound_statements
 
     ID              shift and go to state 22
     NUMBER          shift and go to state 12
@@ -489,7 +490,7 @@ state 21
     (31) expression -> . function_call
     (32) expression -> . function_decl
     (33) function_call -> . expression LPAREN arguments RPAREN
-    (38) function_decl -> . FUNCTION LPAREN parameters RPAREN compound_statements
+    (39) function_decl -> . FUNCTION LPAREN parameters RPAREN compound_statements
 
     ID              shift and go to state 22
     NUMBER          shift and go to state 12
@@ -564,9 +565,9 @@ state 24
 
 state 25
 
-    (38) function_decl -> FUNCTION LPAREN . parameters RPAREN compound_statements
-    (39) parameters -> . parameter parameters_rest
-    (42) parameter -> . ID
+    (39) function_decl -> FUNCTION LPAREN . parameters RPAREN compound_statements
+    (40) parameters -> . parameter parameters_rest
+    (43) parameter -> . ID
 
     ID              shift and go to state 45
 
@@ -618,7 +619,7 @@ state 27
     (31) expression -> . function_call
     (32) expression -> . function_decl
     (33) function_call -> . expression LPAREN arguments RPAREN
-    (38) function_decl -> . FUNCTION LPAREN parameters RPAREN compound_statements
+    (39) function_decl -> . FUNCTION LPAREN parameters RPAREN compound_statements
 
     ID              shift and go to state 22
     NUMBER          shift and go to state 12
@@ -647,7 +648,7 @@ state 28
     (31) expression -> . function_call
     (32) expression -> . function_decl
     (33) function_call -> . expression LPAREN arguments RPAREN
-    (38) function_decl -> . FUNCTION LPAREN parameters RPAREN compound_statements
+    (39) function_decl -> . FUNCTION LPAREN parameters RPAREN compound_statements
 
     ID              shift and go to state 22
     NUMBER          shift and go to state 12
@@ -676,7 +677,7 @@ state 29
     (31) expression -> . function_call
     (32) expression -> . function_decl
     (33) function_call -> . expression LPAREN arguments RPAREN
-    (38) function_decl -> . FUNCTION LPAREN parameters RPAREN compound_statements
+    (39) function_decl -> . FUNCTION LPAREN parameters RPAREN compound_statements
 
     ID              shift and go to state 22
     NUMBER          shift and go to state 12
@@ -705,7 +706,7 @@ state 30
     (31) expression -> . function_call
     (32) expression -> . function_decl
     (33) function_call -> . expression LPAREN arguments RPAREN
-    (38) function_decl -> . FUNCTION LPAREN parameters RPAREN compound_statements
+    (39) function_decl -> . FUNCTION LPAREN parameters RPAREN compound_statements
 
     ID              shift and go to state 22
     NUMBER          shift and go to state 12
@@ -734,7 +735,7 @@ state 31
     (31) expression -> . function_call
     (32) expression -> . function_decl
     (33) function_call -> . expression LPAREN arguments RPAREN
-    (38) function_decl -> . FUNCTION LPAREN parameters RPAREN compound_statements
+    (39) function_decl -> . FUNCTION LPAREN parameters RPAREN compound_statements
 
     ID              shift and go to state 22
     NUMBER          shift and go to state 12
@@ -779,7 +780,7 @@ state 33
     (31) expression -> . function_call
     (32) expression -> . function_decl
     (33) function_call -> . expression LPAREN arguments RPAREN
-    (38) function_decl -> . FUNCTION LPAREN parameters RPAREN compound_statements
+    (39) function_decl -> . FUNCTION LPAREN parameters RPAREN compound_statements
 
     ID              shift and go to state 22
     NUMBER          shift and go to state 12
@@ -808,7 +809,7 @@ state 34
     (31) expression -> . function_call
     (32) expression -> . function_decl
     (33) function_call -> . expression LPAREN arguments RPAREN
-    (38) function_decl -> . FUNCTION LPAREN parameters RPAREN compound_statements
+    (39) function_decl -> . FUNCTION LPAREN parameters RPAREN compound_statements
 
     ID              shift and go to state 22
     NUMBER          shift and go to state 12
@@ -837,7 +838,7 @@ state 35
     (31) expression -> . function_call
     (32) expression -> . function_decl
     (33) function_call -> . expression LPAREN arguments RPAREN
-    (38) function_decl -> . FUNCTION LPAREN parameters RPAREN compound_statements
+    (39) function_decl -> . FUNCTION LPAREN parameters RPAREN compound_statements
 
     ID              shift and go to state 22
     NUMBER          shift and go to state 12
@@ -866,7 +867,7 @@ state 36
     (31) expression -> . function_call
     (32) expression -> . function_decl
     (33) function_call -> . expression LPAREN arguments RPAREN
-    (38) function_decl -> . FUNCTION LPAREN parameters RPAREN compound_statements
+    (39) function_decl -> . FUNCTION LPAREN parameters RPAREN compound_statements
 
     ID              shift and go to state 22
     NUMBER          shift and go to state 12
@@ -895,7 +896,7 @@ state 37
     (31) expression -> . function_call
     (32) expression -> . function_decl
     (33) function_call -> . expression LPAREN arguments RPAREN
-    (38) function_decl -> . FUNCTION LPAREN parameters RPAREN compound_statements
+    (39) function_decl -> . FUNCTION LPAREN parameters RPAREN compound_statements
 
     ID              shift and go to state 22
     NUMBER          shift and go to state 12
@@ -924,7 +925,7 @@ state 38
     (31) expression -> . function_call
     (32) expression -> . function_decl
     (33) function_call -> . expression LPAREN arguments RPAREN
-    (38) function_decl -> . FUNCTION LPAREN parameters RPAREN compound_statements
+    (39) function_decl -> . FUNCTION LPAREN parameters RPAREN compound_statements
 
     ID              shift and go to state 22
     NUMBER          shift and go to state 12
@@ -938,8 +939,9 @@ state 38
 state 39
 
     (33) function_call -> expression LPAREN . arguments RPAREN
-    (34) arguments -> . argument arguments_rest
-    (37) argument -> . expression
+    (34) arguments -> .
+    (35) arguments -> . argument arguments_rest
+    (38) argument -> . expression
     (19) expression -> . expression OP_PLUS expression
     (20) expression -> . expression OP_MINUS expression
     (21) expression -> . expression OP_TIMES expression
@@ -955,8 +957,9 @@ state 39
     (31) expression -> . function_call
     (32) expression -> . function_decl
     (33) function_call -> . expression LPAREN arguments RPAREN
-    (38) function_decl -> . FUNCTION LPAREN parameters RPAREN compound_statements
+    (39) function_decl -> . FUNCTION LPAREN parameters RPAREN compound_statements
 
+    RPAREN          reduce using rule 34 (arguments -> .)
     ID              shift and go to state 22
     NUMBER          shift and go to state 12
     LPAREN          shift and go to state 13
@@ -986,7 +989,7 @@ state 40
     (31) expression -> . function_call
     (32) expression -> . function_decl
     (33) function_call -> . expression LPAREN arguments RPAREN
-    (38) function_decl -> . FUNCTION LPAREN parameters RPAREN compound_statements
+    (39) function_decl -> . FUNCTION LPAREN parameters RPAREN compound_statements
 
     ID              shift and go to state 22
     NUMBER          shift and go to state 12
@@ -1042,28 +1045,28 @@ state 42
 
 state 43
 
-    (38) function_decl -> FUNCTION LPAREN parameters . RPAREN compound_statements
+    (39) function_decl -> FUNCTION LPAREN parameters . RPAREN compound_statements
 
     RPAREN          shift and go to state 63
 
 
 state 44
 
-    (39) parameters -> parameter . parameters_rest
-    (40) parameters_rest -> . COMMA parameter parameters_rest
-    (41) parameters_rest -> .
+    (40) parameters -> parameter . parameters_rest
+    (41) parameters_rest -> . COMMA parameter parameters_rest
+    (42) parameters_rest -> .
 
     COMMA           shift and go to state 64
-    RPAREN          reduce using rule 41 (parameters_rest -> .)
+    RPAREN          reduce using rule 42 (parameters_rest -> .)
 
     parameters_rest                shift and go to state 65
 
 state 45
 
-    (42) parameter -> ID .
+    (43) parameter -> ID .
 
-    COMMA           reduce using rule 42 (parameter -> ID .)
-    RPAREN          reduce using rule 42 (parameter -> ID .)
+    COMMA           reduce using rule 43 (parameter -> ID .)
+    RPAREN          reduce using rule 43 (parameter -> ID .)
 
 
 state 46
@@ -1501,12 +1504,12 @@ state 57
 
 state 58
 
-    (34) arguments -> argument . arguments_rest
-    (35) arguments_rest -> . COMMA argument arguments_rest
-    (36) arguments_rest -> .
+    (35) arguments -> argument . arguments_rest
+    (36) arguments_rest -> . COMMA argument arguments_rest
+    (37) arguments_rest -> .
 
     COMMA           shift and go to state 68
-    RPAREN          reduce using rule 36 (arguments_rest -> .)
+    RPAREN          reduce using rule 37 (arguments_rest -> .)
 
     arguments_rest                 shift and go to state 69
 
@@ -1519,7 +1522,7 @@ state 59
 
 state 60
 
-    (37) argument -> expression .
+    (38) argument -> expression .
     (19) expression -> expression . OP_PLUS expression
     (20) expression -> expression . OP_MINUS expression
     (21) expression -> expression . OP_TIMES expression
@@ -1531,8 +1534,8 @@ state 60
     (27) expression -> expression . OP_EQ expression
     (33) function_call -> expression . LPAREN arguments RPAREN
 
-    COMMA           reduce using rule 37 (argument -> expression .)
-    RPAREN          reduce using rule 37 (argument -> expression .)
+    COMMA           reduce using rule 38 (argument -> expression .)
+    RPAREN          reduce using rule 38 (argument -> expression .)
     OP_PLUS         shift and go to state 38
     OP_MINUS        shift and go to state 33
     OP_TIMES        shift and go to state 35
@@ -1583,7 +1586,7 @@ state 62
 
 state 63
 
-    (38) function_decl -> FUNCTION LPAREN parameters RPAREN . compound_statements
+    (39) function_decl -> FUNCTION LPAREN parameters RPAREN . compound_statements
     (18) compound_statements -> . LBRACKET statements RBRACKET
 
     LBRACKET        shift and go to state 72
@@ -1592,8 +1595,8 @@ state 63
 
 state 64
 
-    (40) parameters_rest -> COMMA . parameter parameters_rest
-    (42) parameter -> . ID
+    (41) parameters_rest -> COMMA . parameter parameters_rest
+    (43) parameter -> . ID
 
     ID              shift and go to state 45
 
@@ -1601,9 +1604,9 @@ state 64
 
 state 65
 
-    (39) parameters -> parameter parameters_rest .
+    (40) parameters -> parameter parameters_rest .
 
-    RPAREN          reduce using rule 39 (parameters -> parameter parameters_rest .)
+    RPAREN          reduce using rule 40 (parameters -> parameter parameters_rest .)
 
 
 state 66
@@ -1633,8 +1636,8 @@ state 67
 
 state 68
 
-    (35) arguments_rest -> COMMA . argument arguments_rest
-    (37) argument -> . expression
+    (36) arguments_rest -> COMMA . argument arguments_rest
+    (38) argument -> . expression
     (19) expression -> . expression OP_PLUS expression
     (20) expression -> . expression OP_MINUS expression
     (21) expression -> . expression OP_TIMES expression
@@ -1650,7 +1653,7 @@ state 68
     (31) expression -> . function_call
     (32) expression -> . function_decl
     (33) function_call -> . expression LPAREN arguments RPAREN
-    (38) function_decl -> . FUNCTION LPAREN parameters RPAREN compound_statements
+    (39) function_decl -> . FUNCTION LPAREN parameters RPAREN compound_statements
 
     ID              shift and go to state 22
     NUMBER          shift and go to state 12
@@ -1664,9 +1667,9 @@ state 68
 
 state 69
 
-    (34) arguments -> argument arguments_rest .
+    (35) arguments -> argument arguments_rest .
 
-    RPAREN          reduce using rule 34 (arguments -> argument arguments_rest .)
+    RPAREN          reduce using rule 35 (arguments -> argument arguments_rest .)
 
 
 state 70
@@ -1740,31 +1743,31 @@ state 73
 
 state 74
 
-    (38) function_decl -> FUNCTION LPAREN parameters RPAREN compound_statements .
+    (39) function_decl -> FUNCTION LPAREN parameters RPAREN compound_statements .
 
-    SEMICOLON       reduce using rule 38 (function_decl -> FUNCTION LPAREN parameters RPAREN compound_statements .)
-    OP_PLUS         reduce using rule 38 (function_decl -> FUNCTION LPAREN parameters RPAREN compound_statements .)
-    OP_MINUS        reduce using rule 38 (function_decl -> FUNCTION LPAREN parameters RPAREN compound_statements .)
-    OP_TIMES        reduce using rule 38 (function_decl -> FUNCTION LPAREN parameters RPAREN compound_statements .)
-    OP_DIVIDE       reduce using rule 38 (function_decl -> FUNCTION LPAREN parameters RPAREN compound_statements .)
-    OP_GT           reduce using rule 38 (function_decl -> FUNCTION LPAREN parameters RPAREN compound_statements .)
-    OP_GTEQ         reduce using rule 38 (function_decl -> FUNCTION LPAREN parameters RPAREN compound_statements .)
-    OP_LT           reduce using rule 38 (function_decl -> FUNCTION LPAREN parameters RPAREN compound_statements .)
-    OP_LTEQ         reduce using rule 38 (function_decl -> FUNCTION LPAREN parameters RPAREN compound_statements .)
-    OP_EQ           reduce using rule 38 (function_decl -> FUNCTION LPAREN parameters RPAREN compound_statements .)
-    LPAREN          reduce using rule 38 (function_decl -> FUNCTION LPAREN parameters RPAREN compound_statements .)
-    RPAREN          reduce using rule 38 (function_decl -> FUNCTION LPAREN parameters RPAREN compound_statements .)
-    COMMA           reduce using rule 38 (function_decl -> FUNCTION LPAREN parameters RPAREN compound_statements .)
+    SEMICOLON       reduce using rule 39 (function_decl -> FUNCTION LPAREN parameters RPAREN compound_statements .)
+    OP_PLUS         reduce using rule 39 (function_decl -> FUNCTION LPAREN parameters RPAREN compound_statements .)
+    OP_MINUS        reduce using rule 39 (function_decl -> FUNCTION LPAREN parameters RPAREN compound_statements .)
+    OP_TIMES        reduce using rule 39 (function_decl -> FUNCTION LPAREN parameters RPAREN compound_statements .)
+    OP_DIVIDE       reduce using rule 39 (function_decl -> FUNCTION LPAREN parameters RPAREN compound_statements .)
+    OP_GT           reduce using rule 39 (function_decl -> FUNCTION LPAREN parameters RPAREN compound_statements .)
+    OP_GTEQ         reduce using rule 39 (function_decl -> FUNCTION LPAREN parameters RPAREN compound_statements .)
+    OP_LT           reduce using rule 39 (function_decl -> FUNCTION LPAREN parameters RPAREN compound_statements .)
+    OP_LTEQ         reduce using rule 39 (function_decl -> FUNCTION LPAREN parameters RPAREN compound_statements .)
+    OP_EQ           reduce using rule 39 (function_decl -> FUNCTION LPAREN parameters RPAREN compound_statements .)
+    LPAREN          reduce using rule 39 (function_decl -> FUNCTION LPAREN parameters RPAREN compound_statements .)
+    RPAREN          reduce using rule 39 (function_decl -> FUNCTION LPAREN parameters RPAREN compound_statements .)
+    COMMA           reduce using rule 39 (function_decl -> FUNCTION LPAREN parameters RPAREN compound_statements .)
 
 
 state 75
 
-    (40) parameters_rest -> COMMA parameter . parameters_rest
-    (40) parameters_rest -> . COMMA parameter parameters_rest
-    (41) parameters_rest -> .
+    (41) parameters_rest -> COMMA parameter . parameters_rest
+    (41) parameters_rest -> . COMMA parameter parameters_rest
+    (42) parameters_rest -> .
 
     COMMA           shift and go to state 64
-    RPAREN          reduce using rule 41 (parameters_rest -> .)
+    RPAREN          reduce using rule 42 (parameters_rest -> .)
 
     parameters_rest                shift and go to state 79
 
@@ -1790,12 +1793,12 @@ state 76
 
 state 77
 
-    (35) arguments_rest -> COMMA argument . arguments_rest
-    (35) arguments_rest -> . COMMA argument arguments_rest
-    (36) arguments_rest -> .
+    (36) arguments_rest -> COMMA argument . arguments_rest
+    (36) arguments_rest -> . COMMA argument arguments_rest
+    (37) arguments_rest -> .
 
     COMMA           shift and go to state 68
-    RPAREN          reduce using rule 36 (arguments_rest -> .)
+    RPAREN          reduce using rule 37 (arguments_rest -> .)
 
     arguments_rest                 shift and go to state 82
 
@@ -1830,7 +1833,7 @@ state 78
     (14) return_stmt -> . RETURN expression SEMICOLON
     (15) if_stmt -> . IF LPAREN expression RPAREN compound_statements else_clause
     (33) function_call -> . expression LPAREN arguments RPAREN
-    (38) function_decl -> . FUNCTION LPAREN parameters RPAREN compound_statements
+    (39) function_decl -> . FUNCTION LPAREN parameters RPAREN compound_statements
 
     RBRACKET        shift and go to state 83
     WHILE           shift and go to state 5
@@ -1854,9 +1857,9 @@ state 78
 
 state 79
 
-    (40) parameters_rest -> COMMA parameter parameters_rest .
+    (41) parameters_rest -> COMMA parameter parameters_rest .
 
-    RPAREN          reduce using rule 40 (parameters_rest -> COMMA parameter parameters_rest .)
+    RPAREN          reduce using rule 41 (parameters_rest -> COMMA parameter parameters_rest .)
 
 
 state 80
@@ -1886,9 +1889,9 @@ state 81
 
 state 82
 
-    (35) arguments_rest -> COMMA argument arguments_rest .
+    (36) arguments_rest -> COMMA argument arguments_rest .
 
-    RPAREN          reduce using rule 35 (arguments_rest -> COMMA argument arguments_rest .)
+    RPAREN          reduce using rule 36 (arguments_rest -> COMMA argument arguments_rest .)
 
 
 state 83
