@@ -22,6 +22,7 @@ def p_statement(p):
                | assign_stmt
                | expression SEMICOLON
                | return_stmt
+               | if_stmt
   """
   p[0] = p[1]
 
@@ -44,6 +45,18 @@ def p_return_none(p):
 def p_return(p):
   "return_stmt : RETURN expression SEMICOLON"
   p[0] = ReturnStmt(p[2])
+
+def p_if(p):
+  "if_stmt : IF LPAREN expression RPAREN compound_statements else_clause"
+  p[0] = IfStmt(p[3], p[5], p[6])
+
+def p_else_empty(p):
+  "else_clause :"
+  p[0] = None
+
+def p_else(p):
+  "else_clause : ELSE compound_statements"
+  p[0] = p[2]
 
 def p_compound_statements(p):
   "compound_statements : LBRACKET statements RBRACKET"

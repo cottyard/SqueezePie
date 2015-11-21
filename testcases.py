@@ -15,3 +15,14 @@ var inc = function(a) {
 };
 log(inc(1));
 '''
+
+case_if = '''
+if (true)
+{
+  log(1);
+}
+else
+{
+  log(2);
+}
+'''

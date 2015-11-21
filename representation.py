@@ -1,5 +1,6 @@
 import runtime
-from excep import ReturnControl
+import builtin
+from excep import ReturnControl, PieUnresolvedSymbol
 
 class Program:
   def __init__(self, statements):
@@ -47,6 +48,19 @@ class ReturnStmt:
     raise ReturnControl(self.expr)
 
 
+class IfStmt:
+  def __init__(self, cond_expr, statements, else_statements):
+    self.cond_expr = cond_expr
+    self.statements = statements
+    self.else_statements = else_statements
+
+  def execute(self, env):
+    cond = self.cond_expr.evaluate(env)
+    to_exec = self.statements if cond else self.else_statements
+    for s in to_exec:
+      s.execute(env)
+
+
 class Expression:
   def execute(self, env):
     self.evaluate(env)
@@ -85,7 +99,10 @@ class Identifier(Expression):
     self.id = id
 
   def evaluate(self, env):
-    return env.lookup(self.id)
+    try:
+      return env.lookup(self.id)
+    except PieUnresolvedSymbol:
+      return builtin.find(self.id)
 
 
 class Number(Expression):

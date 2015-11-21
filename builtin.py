@@ -24,5 +24,7 @@ def find(id):
       '*': times,
       '/': divide,
       '>': greater_than,
-      'log': log
+      'log': log,
+      'true': True,
+      'false': False
     }[id]

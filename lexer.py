@@ -5,7 +5,9 @@ reserved = {
     'while': 'WHILE',
     'var': 'VAR',
     'function': 'FUNCTION',
-    'return': 'RETURN'
+    'return': 'RETURN',
+    'if': 'IF',
+    'else': 'ELSE'
 }
 
 tokens = [
