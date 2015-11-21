@@ -15,8 +15,9 @@ def apply(id, arguments, env):
     for stmt in body:
       stmt.execute(env)
   except ReturnControl as rc:
-    return rc.expr.evaluate(env)
-  
+    ret_value = rc.expr.evaluate(env)
+
+  return ret_value
 
 def function(params, body):
   return (params, body)

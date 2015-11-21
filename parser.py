@@ -68,6 +68,9 @@ def p_expression_bin_op(p):
                 | expression OP_TIMES expression
                 | expression OP_DIVIDE expression
                 | expression OP_GT expression
+                | expression OP_GTEQ expression
+                | expression OP_LT expression
+                | expression OP_LTEQ expression
   """
   p[0] = BinaryOp(p[2], p[1], p[3])
 
@@ -130,7 +133,7 @@ def p_parameter(p):
   p[0] = p[1]
 
 precedence = (
-    ('nonassoc', 'OP_GT'),
+    ('nonassoc', 'OP_GT', 'OP_GTEQ', 'OP_LT', 'OP_LTEQ'),
     ('left', 'OP_PLUS', 'OP_MINUS'),
     ('left', 'OP_TIMES', 'OP_DIVIDE'),
 )

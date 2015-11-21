@@ -14,6 +14,9 @@ tokens = [
    'ID',
    'OP_EQUAL',
    'OP_GT',
+   'OP_GTEQ',
+   'OP_LT',
+   'OP_LTEQ',
    'OP_TIMES',
    'OP_MINUS',
    'OP_PLUS',
@@ -34,6 +37,9 @@ t_OP_TIMES   = r'\*'
 t_OP_DIVIDE  = r'/'
 t_OP_EQUAL = r'='
 t_OP_GT = r'>'
+t_OP_GTEQ = r'>='
+t_OP_LT = r'<'
+t_OP_LTEQ = r'<='
 t_SEMICOLON = r';'
 t_COMMA = r','
 t_LPAREN  = r'\('

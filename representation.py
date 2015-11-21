@@ -57,6 +57,8 @@ class IfStmt:
   def execute(self, env):
     cond = self.cond_expr.evaluate(env)
     to_exec = self.statements if cond else self.else_statements
+    if to_exec is None:
+      return
     for s in to_exec:
       s.execute(env)
 

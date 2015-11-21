@@ -1,29 +1,19 @@
+import operator
+
 def find(id):
-    def plus(o1, o2):
-      return o1 + o2
-
-    def minus(o1, o2):
-      return o1 - o2
-
-    def times(o1, o2):
-      return o1 * o2
-
-    def divide(o1, o2):
-      return o1 / o2
-
-    def greater_than(o1, o2):
-      return o1 > o2
-
     def log(*obj):
       for o in obj:
         print o,
 
     return {
-      '+': plus,
-      '-': minus,
-      '*': times,
-      '/': divide,
-      '>': greater_than,
+      '+': operator.add,
+      '-': operator.sub,
+      '*': operator.mul,
+      '/': operator.div,
+      '>': operator.gt,
+      '<': operator.lt,
+      '>=': operator.ge,
+      '<=': operator.le,
       'log': log,
       'true': True,
       'false': False

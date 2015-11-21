@@ -26,3 +26,14 @@ else
   log(2);
 }
 '''
+
+case_recursion = '''
+var fac = function(n) {
+  if (n <= 1)
+  {
+    return 1;
+  }
+  return n * fac(n - 1);
+};
+log(fac(6));
+'''
