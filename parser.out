@@ -29,33 +29,35 @@ Rule 23    expression -> expression OP_GT expression
 Rule 24    expression -> expression OP_GTEQ expression
 Rule 25    expression -> expression OP_LT expression
 Rule 26    expression -> expression OP_LTEQ expression
-Rule 27    expression -> ID
-Rule 28    expression -> NUMBER
-Rule 29    expression -> LPAREN expression RPAREN
-Rule 30    expression -> function_call
-Rule 31    expression -> function_decl
-Rule 32    function_call -> ID LPAREN arguments RPAREN
-Rule 33    arguments -> argument arguments_rest
-Rule 34    arguments_rest -> COMMA argument arguments_rest
-Rule 35    arguments_rest -> <empty>
-Rule 36    argument -> expression
-Rule 37    function_decl -> FUNCTION LPAREN parameters RPAREN compound_statements
-Rule 38    parameters -> parameter parameters_rest
-Rule 39    parameters_rest -> COMMA parameter parameters_rest
-Rule 40    parameters_rest -> <empty>
-Rule 41    parameter -> ID
+Rule 27    expression -> expression OP_EQ expression
+Rule 28    expression -> ID
+Rule 29    expression -> NUMBER
+Rule 30    expression -> LPAREN expression RPAREN
+Rule 31    expression -> function_call
+Rule 32    expression -> function_decl
+Rule 33    function_call -> expression LPAREN arguments RPAREN
+Rule 34    arguments -> argument arguments_rest
+Rule 35    arguments_rest -> COMMA argument arguments_rest
+Rule 36    arguments_rest -> <empty>
+Rule 37    argument -> expression
+Rule 38    function_decl -> FUNCTION LPAREN parameters RPAREN compound_statements
+Rule 39    parameters -> parameter parameters_rest
+Rule 40    parameters_rest -> COMMA parameter parameters_rest
+Rule 41    parameters_rest -> <empty>
+Rule 42    parameter -> ID
 
 Terminals, with rules where they appear
 
-COMMA                : 34 39
+COMMA                : 35 40
 ELSE                 : 17
-FUNCTION             : 37
-ID                   : 10 11 27 32 41
+FUNCTION             : 38
+ID                   : 10 11 28 42
 IF                   : 15
 LBRACKET             : 18
-LPAREN               : 12 15 29 32 37
-NUMBER               : 28
+LPAREN               : 12 15 30 33 38
+NUMBER               : 29
 OP_DIVIDE            : 22
+OP_EQ                : 27
 OP_EQUAL             : 10 11
 OP_GT                : 23
 OP_GTEQ              : 24
@@ -66,7 +68,7 @@ OP_PLUS              : 19
 OP_TIMES             : 21
 RBRACKET             : 18
 RETURN               : 13 14
-RPAREN               : 12 15 29 32 37
+RPAREN               : 12 15 30 33 38
 SEMICOLON            : 7 10 11 13 14
 VAR                  : 10
 WHILE                : 12
@@ -74,20 +76,20 @@ error                :
 
 Nonterminals, with rules where they appear
 
-argument             : 33 34
-arguments            : 32
-arguments_rest       : 33 34
+argument             : 34 35
+arguments            : 33
+arguments_rest       : 34 35
 assign_stmt          : 6
-compound_statements  : 12 15 17 37
+compound_statements  : 12 15 17 38
 define_stmt          : 5
 else_clause          : 15
-expression           : 7 10 11 12 14 15 19 19 20 20 21 21 22 22 23 23 24 24 25 25 26 26 29 36
-function_call        : 30
-function_decl        : 31
+expression           : 7 10 11 12 14 15 19 19 20 20 21 21 22 22 23 23 24 24 25 25 26 26 27 27 30 33 37
+function_call        : 31
+function_decl        : 32
 if_stmt              : 9
-parameter            : 38 39
-parameters           : 37
-parameters_rest      : 38 39
+parameter            : 39 40
+parameters           : 38
+parameters_rest      : 39 40
 program              : 0
 return_stmt          : 8
 statement            : 2
@@ -143,16 +145,17 @@ state 2
     (24) expression -> . expression OP_GTEQ expression
     (25) expression -> . expression OP_LT expression
     (26) expression -> . expression OP_LTEQ expression
-    (27) expression -> . ID
-    (28) expression -> . NUMBER
-    (29) expression -> . LPAREN expression RPAREN
-    (30) expression -> . function_call
-    (31) expression -> . function_decl
+    (27) expression -> . expression OP_EQ expression
+    (28) expression -> . ID
+    (29) expression -> . NUMBER
+    (30) expression -> . LPAREN expression RPAREN
+    (31) expression -> . function_call
+    (32) expression -> . function_decl
     (13) return_stmt -> . RETURN SEMICOLON
     (14) return_stmt -> . RETURN expression SEMICOLON
     (15) if_stmt -> . IF LPAREN expression RPAREN compound_statements else_clause
-    (32) function_call -> . ID LPAREN arguments RPAREN
-    (37) function_decl -> . FUNCTION LPAREN parameters RPAREN compound_statements
+    (33) function_call -> . expression LPAREN arguments RPAREN
+    (38) function_decl -> . FUNCTION LPAREN parameters RPAREN compound_statements
 
     $end            reduce using rule 1 (program -> statements .)
     WHILE           shift and go to state 5
@@ -176,19 +179,21 @@ state 2
 
 state 3
 
-    (30) expression -> function_call .
+    (31) expression -> function_call .
 
-    OP_PLUS         reduce using rule 30 (expression -> function_call .)
-    OP_MINUS        reduce using rule 30 (expression -> function_call .)
-    OP_TIMES        reduce using rule 30 (expression -> function_call .)
-    OP_DIVIDE       reduce using rule 30 (expression -> function_call .)
-    OP_GT           reduce using rule 30 (expression -> function_call .)
-    OP_GTEQ         reduce using rule 30 (expression -> function_call .)
-    OP_LT           reduce using rule 30 (expression -> function_call .)
-    OP_LTEQ         reduce using rule 30 (expression -> function_call .)
-    SEMICOLON       reduce using rule 30 (expression -> function_call .)
-    RPAREN          reduce using rule 30 (expression -> function_call .)
-    COMMA           reduce using rule 30 (expression -> function_call .)
+    OP_PLUS         reduce using rule 31 (expression -> function_call .)
+    OP_MINUS        reduce using rule 31 (expression -> function_call .)
+    OP_TIMES        reduce using rule 31 (expression -> function_call .)
+    OP_DIVIDE       reduce using rule 31 (expression -> function_call .)
+    OP_GT           reduce using rule 31 (expression -> function_call .)
+    OP_GTEQ         reduce using rule 31 (expression -> function_call .)
+    OP_LT           reduce using rule 31 (expression -> function_call .)
+    OP_LTEQ         reduce using rule 31 (expression -> function_call .)
+    OP_EQ           reduce using rule 31 (expression -> function_call .)
+    LPAREN          reduce using rule 31 (expression -> function_call .)
+    COMMA           reduce using rule 31 (expression -> function_call .)
+    RPAREN          reduce using rule 31 (expression -> function_call .)
+    SEMICOLON       reduce using rule 31 (expression -> function_call .)
 
 
 state 4
@@ -209,7 +214,6 @@ state 6
 
     (8) statement -> return_stmt .
 
-    RBRACKET        reduce using rule 8 (statement -> return_stmt .)
     WHILE           reduce using rule 8 (statement -> return_stmt .)
     VAR             reduce using rule 8 (statement -> return_stmt .)
     ID              reduce using rule 8 (statement -> return_stmt .)
@@ -219,6 +223,7 @@ state 6
     IF              reduce using rule 8 (statement -> return_stmt .)
     FUNCTION        reduce using rule 8 (statement -> return_stmt .)
     $end            reduce using rule 8 (statement -> return_stmt .)
+    RBRACKET        reduce using rule 8 (statement -> return_stmt .)
 
 
 state 7
@@ -233,29 +238,29 @@ state 7
     (24) expression -> . expression OP_GTEQ expression
     (25) expression -> . expression OP_LT expression
     (26) expression -> . expression OP_LTEQ expression
-    (27) expression -> . ID
-    (28) expression -> . NUMBER
-    (29) expression -> . LPAREN expression RPAREN
-    (30) expression -> . function_call
-    (31) expression -> . function_decl
-    (32) function_call -> . ID LPAREN arguments RPAREN
-    (37) function_decl -> . FUNCTION LPAREN parameters RPAREN compound_statements
+    (27) expression -> . expression OP_EQ expression
+    (28) expression -> . ID
+    (29) expression -> . NUMBER
+    (30) expression -> . LPAREN expression RPAREN
+    (31) expression -> . function_call
+    (32) expression -> . function_decl
+    (33) function_call -> . expression LPAREN arguments RPAREN
+    (38) function_decl -> . FUNCTION LPAREN parameters RPAREN compound_statements
 
-    SEMICOLON       shift and go to state 22
-    ID              shift and go to state 24
+    SEMICOLON       shift and go to state 23
+    ID              shift and go to state 22
     NUMBER          shift and go to state 12
     LPAREN          shift and go to state 13
     FUNCTION        shift and go to state 11
 
     function_decl                  shift and go to state 16
     function_call                  shift and go to state 3
-    expression                     shift and go to state 23
+    expression                     shift and go to state 24
 
 state 8
 
     (5) statement -> define_stmt .
 
-    RBRACKET        reduce using rule 5 (statement -> define_stmt .)
     WHILE           reduce using rule 5 (statement -> define_stmt .)
     VAR             reduce using rule 5 (statement -> define_stmt .)
     ID              reduce using rule 5 (statement -> define_stmt .)
@@ -265,13 +270,13 @@ state 8
     IF              reduce using rule 5 (statement -> define_stmt .)
     FUNCTION        reduce using rule 5 (statement -> define_stmt .)
     $end            reduce using rule 5 (statement -> define_stmt .)
+    RBRACKET        reduce using rule 5 (statement -> define_stmt .)
 
 
 state 9
 
     (6) statement -> assign_stmt .
 
-    RBRACKET        reduce using rule 6 (statement -> assign_stmt .)
     WHILE           reduce using rule 6 (statement -> assign_stmt .)
     VAR             reduce using rule 6 (statement -> assign_stmt .)
     ID              reduce using rule 6 (statement -> assign_stmt .)
@@ -281,12 +286,14 @@ state 9
     IF              reduce using rule 6 (statement -> assign_stmt .)
     FUNCTION        reduce using rule 6 (statement -> assign_stmt .)
     $end            reduce using rule 6 (statement -> assign_stmt .)
+    RBRACKET        reduce using rule 6 (statement -> assign_stmt .)
 
 
 state 10
 
     (2) statements -> statements statement .
 
+    RBRACKET        reduce using rule 2 (statements -> statements statement .)
     WHILE           reduce using rule 2 (statements -> statements statement .)
     VAR             reduce using rule 2 (statements -> statements statement .)
     ID              reduce using rule 2 (statements -> statements statement .)
@@ -296,36 +303,37 @@ state 10
     IF              reduce using rule 2 (statements -> statements statement .)
     FUNCTION        reduce using rule 2 (statements -> statements statement .)
     $end            reduce using rule 2 (statements -> statements statement .)
-    RBRACKET        reduce using rule 2 (statements -> statements statement .)
 
 
 state 11
 
-    (37) function_decl -> FUNCTION . LPAREN parameters RPAREN compound_statements
+    (38) function_decl -> FUNCTION . LPAREN parameters RPAREN compound_statements
 
     LPAREN          shift and go to state 25
 
 
 state 12
 
-    (28) expression -> NUMBER .
+    (29) expression -> NUMBER .
 
-    OP_PLUS         reduce using rule 28 (expression -> NUMBER .)
-    OP_MINUS        reduce using rule 28 (expression -> NUMBER .)
-    OP_TIMES        reduce using rule 28 (expression -> NUMBER .)
-    OP_DIVIDE       reduce using rule 28 (expression -> NUMBER .)
-    OP_GT           reduce using rule 28 (expression -> NUMBER .)
-    OP_GTEQ         reduce using rule 28 (expression -> NUMBER .)
-    OP_LT           reduce using rule 28 (expression -> NUMBER .)
-    OP_LTEQ         reduce using rule 28 (expression -> NUMBER .)
-    SEMICOLON       reduce using rule 28 (expression -> NUMBER .)
-    RPAREN          reduce using rule 28 (expression -> NUMBER .)
-    COMMA           reduce using rule 28 (expression -> NUMBER .)
+    OP_PLUS         reduce using rule 29 (expression -> NUMBER .)
+    OP_MINUS        reduce using rule 29 (expression -> NUMBER .)
+    OP_TIMES        reduce using rule 29 (expression -> NUMBER .)
+    OP_DIVIDE       reduce using rule 29 (expression -> NUMBER .)
+    OP_GT           reduce using rule 29 (expression -> NUMBER .)
+    OP_GTEQ         reduce using rule 29 (expression -> NUMBER .)
+    OP_LT           reduce using rule 29 (expression -> NUMBER .)
+    OP_LTEQ         reduce using rule 29 (expression -> NUMBER .)
+    OP_EQ           reduce using rule 29 (expression -> NUMBER .)
+    LPAREN          reduce using rule 29 (expression -> NUMBER .)
+    COMMA           reduce using rule 29 (expression -> NUMBER .)
+    RPAREN          reduce using rule 29 (expression -> NUMBER .)
+    SEMICOLON       reduce using rule 29 (expression -> NUMBER .)
 
 
 state 13
 
-    (29) expression -> LPAREN . expression RPAREN
+    (30) expression -> LPAREN . expression RPAREN
     (19) expression -> . expression OP_PLUS expression
     (20) expression -> . expression OP_MINUS expression
     (21) expression -> . expression OP_TIMES expression
@@ -334,15 +342,16 @@ state 13
     (24) expression -> . expression OP_GTEQ expression
     (25) expression -> . expression OP_LT expression
     (26) expression -> . expression OP_LTEQ expression
-    (27) expression -> . ID
-    (28) expression -> . NUMBER
-    (29) expression -> . LPAREN expression RPAREN
-    (30) expression -> . function_call
-    (31) expression -> . function_decl
-    (32) function_call -> . ID LPAREN arguments RPAREN
-    (37) function_decl -> . FUNCTION LPAREN parameters RPAREN compound_statements
+    (27) expression -> . expression OP_EQ expression
+    (28) expression -> . ID
+    (29) expression -> . NUMBER
+    (30) expression -> . LPAREN expression RPAREN
+    (31) expression -> . function_call
+    (32) expression -> . function_decl
+    (33) function_call -> . expression LPAREN arguments RPAREN
+    (38) function_decl -> . FUNCTION LPAREN parameters RPAREN compound_statements
 
-    ID              shift and go to state 24
+    ID              shift and go to state 22
     NUMBER          shift and go to state 12
     LPAREN          shift and go to state 13
     FUNCTION        shift and go to state 11
@@ -354,51 +363,52 @@ state 13
 state 14
 
     (11) assign_stmt -> ID . OP_EQUAL expression SEMICOLON
-    (27) expression -> ID .
-    (32) function_call -> ID . LPAREN arguments RPAREN
+    (28) expression -> ID .
 
-    OP_EQUAL        shift and go to state 28
-    SEMICOLON       reduce using rule 27 (expression -> ID .)
-    OP_PLUS         reduce using rule 27 (expression -> ID .)
-    OP_MINUS        reduce using rule 27 (expression -> ID .)
-    OP_TIMES        reduce using rule 27 (expression -> ID .)
-    OP_DIVIDE       reduce using rule 27 (expression -> ID .)
-    OP_GT           reduce using rule 27 (expression -> ID .)
-    OP_GTEQ         reduce using rule 27 (expression -> ID .)
-    OP_LT           reduce using rule 27 (expression -> ID .)
-    OP_LTEQ         reduce using rule 27 (expression -> ID .)
-    LPAREN          shift and go to state 27
+    OP_EQUAL        shift and go to state 27
+    SEMICOLON       reduce using rule 28 (expression -> ID .)
+    OP_PLUS         reduce using rule 28 (expression -> ID .)
+    OP_MINUS        reduce using rule 28 (expression -> ID .)
+    OP_TIMES        reduce using rule 28 (expression -> ID .)
+    OP_DIVIDE       reduce using rule 28 (expression -> ID .)
+    OP_GT           reduce using rule 28 (expression -> ID .)
+    OP_GTEQ         reduce using rule 28 (expression -> ID .)
+    OP_LT           reduce using rule 28 (expression -> ID .)
+    OP_LTEQ         reduce using rule 28 (expression -> ID .)
+    OP_EQ           reduce using rule 28 (expression -> ID .)
+    LPAREN          reduce using rule 28 (expression -> ID .)
 
 
 state 15
 
     (15) if_stmt -> IF . LPAREN expression RPAREN compound_statements else_clause
 
-    LPAREN          shift and go to state 29
+    LPAREN          shift and go to state 28
 
 
 state 16
 
-    (31) expression -> function_decl .
+    (32) expression -> function_decl .
 
-    OP_PLUS         reduce using rule 31 (expression -> function_decl .)
-    OP_MINUS        reduce using rule 31 (expression -> function_decl .)
-    OP_TIMES        reduce using rule 31 (expression -> function_decl .)
-    OP_DIVIDE       reduce using rule 31 (expression -> function_decl .)
-    OP_GT           reduce using rule 31 (expression -> function_decl .)
-    OP_GTEQ         reduce using rule 31 (expression -> function_decl .)
-    OP_LT           reduce using rule 31 (expression -> function_decl .)
-    OP_LTEQ         reduce using rule 31 (expression -> function_decl .)
-    SEMICOLON       reduce using rule 31 (expression -> function_decl .)
-    RPAREN          reduce using rule 31 (expression -> function_decl .)
-    COMMA           reduce using rule 31 (expression -> function_decl .)
+    OP_PLUS         reduce using rule 32 (expression -> function_decl .)
+    OP_MINUS        reduce using rule 32 (expression -> function_decl .)
+    OP_TIMES        reduce using rule 32 (expression -> function_decl .)
+    OP_DIVIDE       reduce using rule 32 (expression -> function_decl .)
+    OP_GT           reduce using rule 32 (expression -> function_decl .)
+    OP_GTEQ         reduce using rule 32 (expression -> function_decl .)
+    OP_LT           reduce using rule 32 (expression -> function_decl .)
+    OP_LTEQ         reduce using rule 32 (expression -> function_decl .)
+    OP_EQ           reduce using rule 32 (expression -> function_decl .)
+    LPAREN          reduce using rule 32 (expression -> function_decl .)
+    COMMA           reduce using rule 32 (expression -> function_decl .)
+    RPAREN          reduce using rule 32 (expression -> function_decl .)
+    SEMICOLON       reduce using rule 32 (expression -> function_decl .)
 
 
 state 17
 
     (9) statement -> if_stmt .
 
-    RBRACKET        reduce using rule 9 (statement -> if_stmt .)
     WHILE           reduce using rule 9 (statement -> if_stmt .)
     VAR             reduce using rule 9 (statement -> if_stmt .)
     ID              reduce using rule 9 (statement -> if_stmt .)
@@ -408,13 +418,13 @@ state 17
     IF              reduce using rule 9 (statement -> if_stmt .)
     FUNCTION        reduce using rule 9 (statement -> if_stmt .)
     $end            reduce using rule 9 (statement -> if_stmt .)
+    RBRACKET        reduce using rule 9 (statement -> if_stmt .)
 
 
 state 18
 
     (4) statement -> while_stmt .
 
-    RBRACKET        reduce using rule 4 (statement -> while_stmt .)
     WHILE           reduce using rule 4 (statement -> while_stmt .)
     VAR             reduce using rule 4 (statement -> while_stmt .)
     ID              reduce using rule 4 (statement -> while_stmt .)
@@ -424,6 +434,7 @@ state 18
     IF              reduce using rule 4 (statement -> while_stmt .)
     FUNCTION        reduce using rule 4 (statement -> while_stmt .)
     $end            reduce using rule 4 (statement -> while_stmt .)
+    RBRACKET        reduce using rule 4 (statement -> while_stmt .)
 
 
 state 19
@@ -437,23 +448,27 @@ state 19
     (24) expression -> expression . OP_GTEQ expression
     (25) expression -> expression . OP_LT expression
     (26) expression -> expression . OP_LTEQ expression
+    (27) expression -> expression . OP_EQ expression
+    (33) function_call -> expression . LPAREN arguments RPAREN
 
     SEMICOLON       shift and go to state 32
     OP_PLUS         shift and go to state 38
     OP_MINUS        shift and go to state 33
     OP_TIMES        shift and go to state 35
-    OP_DIVIDE       shift and go to state 31
+    OP_DIVIDE       shift and go to state 30
     OP_GT           shift and go to state 36
     OP_GTEQ         shift and go to state 34
     OP_LT           shift and go to state 37
-    OP_LTEQ         shift and go to state 30
+    OP_LTEQ         shift and go to state 29
+    OP_EQ           shift and go to state 31
+    LPAREN          shift and go to state 39
 
 
 state 20
 
     (10) define_stmt -> VAR ID . OP_EQUAL expression SEMICOLON
 
-    OP_EQUAL        shift and go to state 39
+    OP_EQUAL        shift and go to state 40
 
 
 state 21
@@ -467,24 +482,44 @@ state 21
     (24) expression -> . expression OP_GTEQ expression
     (25) expression -> . expression OP_LT expression
     (26) expression -> . expression OP_LTEQ expression
-    (27) expression -> . ID
-    (28) expression -> . NUMBER
-    (29) expression -> . LPAREN expression RPAREN
-    (30) expression -> . function_call
-    (31) expression -> . function_decl
-    (32) function_call -> . ID LPAREN arguments RPAREN
-    (37) function_decl -> . FUNCTION LPAREN parameters RPAREN compound_statements
+    (27) expression -> . expression OP_EQ expression
+    (28) expression -> . ID
+    (29) expression -> . NUMBER
+    (30) expression -> . LPAREN expression RPAREN
+    (31) expression -> . function_call
+    (32) expression -> . function_decl
+    (33) function_call -> . expression LPAREN arguments RPAREN
+    (38) function_decl -> . FUNCTION LPAREN parameters RPAREN compound_statements
 
-    ID              shift and go to state 24
+    ID              shift and go to state 22
     NUMBER          shift and go to state 12
     LPAREN          shift and go to state 13
     FUNCTION        shift and go to state 11
 
     function_decl                  shift and go to state 16
     function_call                  shift and go to state 3
-    expression                     shift and go to state 40
+    expression                     shift and go to state 41
 
 state 22
+
+    (28) expression -> ID .
+
+    OP_PLUS         reduce using rule 28 (expression -> ID .)
+    OP_MINUS        reduce using rule 28 (expression -> ID .)
+    OP_TIMES        reduce using rule 28 (expression -> ID .)
+    OP_DIVIDE       reduce using rule 28 (expression -> ID .)
+    OP_GT           reduce using rule 28 (expression -> ID .)
+    OP_GTEQ         reduce using rule 28 (expression -> ID .)
+    OP_LT           reduce using rule 28 (expression -> ID .)
+    OP_LTEQ         reduce using rule 28 (expression -> ID .)
+    OP_EQ           reduce using rule 28 (expression -> ID .)
+    LPAREN          reduce using rule 28 (expression -> ID .)
+    COMMA           reduce using rule 28 (expression -> ID .)
+    RPAREN          reduce using rule 28 (expression -> ID .)
+    SEMICOLON       reduce using rule 28 (expression -> ID .)
+
+
+state 23
 
     (13) return_stmt -> RETURN SEMICOLON .
 
@@ -500,7 +535,7 @@ state 22
     RBRACKET        reduce using rule 13 (return_stmt -> RETURN SEMICOLON .)
 
 
-state 23
+state 24
 
     (14) return_stmt -> RETURN expression . SEMICOLON
     (19) expression -> expression . OP_PLUS expression
@@ -511,51 +546,36 @@ state 23
     (24) expression -> expression . OP_GTEQ expression
     (25) expression -> expression . OP_LT expression
     (26) expression -> expression . OP_LTEQ expression
+    (27) expression -> expression . OP_EQ expression
+    (33) function_call -> expression . LPAREN arguments RPAREN
 
-    SEMICOLON       shift and go to state 41
+    SEMICOLON       shift and go to state 42
     OP_PLUS         shift and go to state 38
     OP_MINUS        shift and go to state 33
     OP_TIMES        shift and go to state 35
-    OP_DIVIDE       shift and go to state 31
+    OP_DIVIDE       shift and go to state 30
     OP_GT           shift and go to state 36
     OP_GTEQ         shift and go to state 34
     OP_LT           shift and go to state 37
-    OP_LTEQ         shift and go to state 30
-
-
-state 24
-
-    (27) expression -> ID .
-    (32) function_call -> ID . LPAREN arguments RPAREN
-
-    OP_PLUS         reduce using rule 27 (expression -> ID .)
-    OP_MINUS        reduce using rule 27 (expression -> ID .)
-    OP_TIMES        reduce using rule 27 (expression -> ID .)
-    OP_DIVIDE       reduce using rule 27 (expression -> ID .)
-    OP_GT           reduce using rule 27 (expression -> ID .)
-    OP_GTEQ         reduce using rule 27 (expression -> ID .)
-    OP_LT           reduce using rule 27 (expression -> ID .)
-    OP_LTEQ         reduce using rule 27 (expression -> ID .)
-    SEMICOLON       reduce using rule 27 (expression -> ID .)
-    RPAREN          reduce using rule 27 (expression -> ID .)
-    COMMA           reduce using rule 27 (expression -> ID .)
-    LPAREN          shift and go to state 27
+    OP_LTEQ         shift and go to state 29
+    OP_EQ           shift and go to state 31
+    LPAREN          shift and go to state 39
 
 
 state 25
 
-    (37) function_decl -> FUNCTION LPAREN . parameters RPAREN compound_statements
-    (38) parameters -> . parameter parameters_rest
-    (41) parameter -> . ID
+    (38) function_decl -> FUNCTION LPAREN . parameters RPAREN compound_statements
+    (39) parameters -> . parameter parameters_rest
+    (42) parameter -> . ID
 
-    ID              shift and go to state 44
+    ID              shift and go to state 45
 
-    parameter                      shift and go to state 43
-    parameters                     shift and go to state 42
+    parameter                      shift and go to state 44
+    parameters                     shift and go to state 43
 
 state 26
 
-    (29) expression -> LPAREN expression . RPAREN
+    (30) expression -> LPAREN expression . RPAREN
     (19) expression -> expression . OP_PLUS expression
     (20) expression -> expression . OP_MINUS expression
     (21) expression -> expression . OP_TIMES expression
@@ -564,51 +584,23 @@ state 26
     (24) expression -> expression . OP_GTEQ expression
     (25) expression -> expression . OP_LT expression
     (26) expression -> expression . OP_LTEQ expression
+    (27) expression -> expression . OP_EQ expression
+    (33) function_call -> expression . LPAREN arguments RPAREN
 
-    RPAREN          shift and go to state 45
+    RPAREN          shift and go to state 46
     OP_PLUS         shift and go to state 38
     OP_MINUS        shift and go to state 33
     OP_TIMES        shift and go to state 35
-    OP_DIVIDE       shift and go to state 31
+    OP_DIVIDE       shift and go to state 30
     OP_GT           shift and go to state 36
     OP_GTEQ         shift and go to state 34
     OP_LT           shift and go to state 37
-    OP_LTEQ         shift and go to state 30
+    OP_LTEQ         shift and go to state 29
+    OP_EQ           shift and go to state 31
+    LPAREN          shift and go to state 39
 
 
 state 27
-
-    (32) function_call -> ID LPAREN . arguments RPAREN
-    (33) arguments -> . argument arguments_rest
-    (36) argument -> . expression
-    (19) expression -> . expression OP_PLUS expression
-    (20) expression -> . expression OP_MINUS expression
-    (21) expression -> . expression OP_TIMES expression
-    (22) expression -> . expression OP_DIVIDE expression
-    (23) expression -> . expression OP_GT expression
-    (24) expression -> . expression OP_GTEQ expression
-    (25) expression -> . expression OP_LT expression
-    (26) expression -> . expression OP_LTEQ expression
-    (27) expression -> . ID
-    (28) expression -> . NUMBER
-    (29) expression -> . LPAREN expression RPAREN
-    (30) expression -> . function_call
-    (31) expression -> . function_decl
-    (32) function_call -> . ID LPAREN arguments RPAREN
-    (37) function_decl -> . FUNCTION LPAREN parameters RPAREN compound_statements
-
-    ID              shift and go to state 24
-    NUMBER          shift and go to state 12
-    LPAREN          shift and go to state 13
-    FUNCTION        shift and go to state 11
-
-    function_decl                  shift and go to state 16
-    argument                       shift and go to state 46
-    function_call                  shift and go to state 3
-    arguments                      shift and go to state 47
-    expression                     shift and go to state 48
-
-state 28
 
     (11) assign_stmt -> ID OP_EQUAL . expression SEMICOLON
     (19) expression -> . expression OP_PLUS expression
@@ -619,24 +611,25 @@ state 28
     (24) expression -> . expression OP_GTEQ expression
     (25) expression -> . expression OP_LT expression
     (26) expression -> . expression OP_LTEQ expression
-    (27) expression -> . ID
-    (28) expression -> . NUMBER
-    (29) expression -> . LPAREN expression RPAREN
-    (30) expression -> . function_call
-    (31) expression -> . function_decl
-    (32) function_call -> . ID LPAREN arguments RPAREN
-    (37) function_decl -> . FUNCTION LPAREN parameters RPAREN compound_statements
+    (27) expression -> . expression OP_EQ expression
+    (28) expression -> . ID
+    (29) expression -> . NUMBER
+    (30) expression -> . LPAREN expression RPAREN
+    (31) expression -> . function_call
+    (32) expression -> . function_decl
+    (33) function_call -> . expression LPAREN arguments RPAREN
+    (38) function_decl -> . FUNCTION LPAREN parameters RPAREN compound_statements
 
-    ID              shift and go to state 24
+    ID              shift and go to state 22
     NUMBER          shift and go to state 12
     LPAREN          shift and go to state 13
     FUNCTION        shift and go to state 11
 
     function_decl                  shift and go to state 16
     function_call                  shift and go to state 3
-    expression                     shift and go to state 49
+    expression                     shift and go to state 47
 
-state 29
+state 28
 
     (15) if_stmt -> IF LPAREN . expression RPAREN compound_statements else_clause
     (19) expression -> . expression OP_PLUS expression
@@ -647,24 +640,25 @@ state 29
     (24) expression -> . expression OP_GTEQ expression
     (25) expression -> . expression OP_LT expression
     (26) expression -> . expression OP_LTEQ expression
-    (27) expression -> . ID
-    (28) expression -> . NUMBER
-    (29) expression -> . LPAREN expression RPAREN
-    (30) expression -> . function_call
-    (31) expression -> . function_decl
-    (32) function_call -> . ID LPAREN arguments RPAREN
-    (37) function_decl -> . FUNCTION LPAREN parameters RPAREN compound_statements
+    (27) expression -> . expression OP_EQ expression
+    (28) expression -> . ID
+    (29) expression -> . NUMBER
+    (30) expression -> . LPAREN expression RPAREN
+    (31) expression -> . function_call
+    (32) expression -> . function_decl
+    (33) function_call -> . expression LPAREN arguments RPAREN
+    (38) function_decl -> . FUNCTION LPAREN parameters RPAREN compound_statements
 
-    ID              shift and go to state 24
+    ID              shift and go to state 22
     NUMBER          shift and go to state 12
     LPAREN          shift and go to state 13
     FUNCTION        shift and go to state 11
 
     function_decl                  shift and go to state 16
     function_call                  shift and go to state 3
-    expression                     shift and go to state 50
+    expression                     shift and go to state 48
 
-state 30
+state 29
 
     (26) expression -> expression OP_LTEQ . expression
     (19) expression -> . expression OP_PLUS expression
@@ -675,24 +669,25 @@ state 30
     (24) expression -> . expression OP_GTEQ expression
     (25) expression -> . expression OP_LT expression
     (26) expression -> . expression OP_LTEQ expression
-    (27) expression -> . ID
-    (28) expression -> . NUMBER
-    (29) expression -> . LPAREN expression RPAREN
-    (30) expression -> . function_call
-    (31) expression -> . function_decl
-    (32) function_call -> . ID LPAREN arguments RPAREN
-    (37) function_decl -> . FUNCTION LPAREN parameters RPAREN compound_statements
+    (27) expression -> . expression OP_EQ expression
+    (28) expression -> . ID
+    (29) expression -> . NUMBER
+    (30) expression -> . LPAREN expression RPAREN
+    (31) expression -> . function_call
+    (32) expression -> . function_decl
+    (33) function_call -> . expression LPAREN arguments RPAREN
+    (38) function_decl -> . FUNCTION LPAREN parameters RPAREN compound_statements
 
-    ID              shift and go to state 24
+    ID              shift and go to state 22
     NUMBER          shift and go to state 12
     LPAREN          shift and go to state 13
     FUNCTION        shift and go to state 11
 
     function_decl                  shift and go to state 16
     function_call                  shift and go to state 3
-    expression                     shift and go to state 51
+    expression                     shift and go to state 49
 
-state 31
+state 30
 
     (22) expression -> expression OP_DIVIDE . expression
     (19) expression -> . expression OP_PLUS expression
@@ -703,28 +698,57 @@ state 31
     (24) expression -> . expression OP_GTEQ expression
     (25) expression -> . expression OP_LT expression
     (26) expression -> . expression OP_LTEQ expression
-    (27) expression -> . ID
-    (28) expression -> . NUMBER
-    (29) expression -> . LPAREN expression RPAREN
-    (30) expression -> . function_call
-    (31) expression -> . function_decl
-    (32) function_call -> . ID LPAREN arguments RPAREN
-    (37) function_decl -> . FUNCTION LPAREN parameters RPAREN compound_statements
+    (27) expression -> . expression OP_EQ expression
+    (28) expression -> . ID
+    (29) expression -> . NUMBER
+    (30) expression -> . LPAREN expression RPAREN
+    (31) expression -> . function_call
+    (32) expression -> . function_decl
+    (33) function_call -> . expression LPAREN arguments RPAREN
+    (38) function_decl -> . FUNCTION LPAREN parameters RPAREN compound_statements
 
-    ID              shift and go to state 24
+    ID              shift and go to state 22
     NUMBER          shift and go to state 12
     LPAREN          shift and go to state 13
     FUNCTION        shift and go to state 11
 
     function_decl                  shift and go to state 16
     function_call                  shift and go to state 3
-    expression                     shift and go to state 52
+    expression                     shift and go to state 50
+
+state 31
+
+    (27) expression -> expression OP_EQ . expression
+    (19) expression -> . expression OP_PLUS expression
+    (20) expression -> . expression OP_MINUS expression
+    (21) expression -> . expression OP_TIMES expression
+    (22) expression -> . expression OP_DIVIDE expression
+    (23) expression -> . expression OP_GT expression
+    (24) expression -> . expression OP_GTEQ expression
+    (25) expression -> . expression OP_LT expression
+    (26) expression -> . expression OP_LTEQ expression
+    (27) expression -> . expression OP_EQ expression
+    (28) expression -> . ID
+    (29) expression -> . NUMBER
+    (30) expression -> . LPAREN expression RPAREN
+    (31) expression -> . function_call
+    (32) expression -> . function_decl
+    (33) function_call -> . expression LPAREN arguments RPAREN
+    (38) function_decl -> . FUNCTION LPAREN parameters RPAREN compound_statements
+
+    ID              shift and go to state 22
+    NUMBER          shift and go to state 12
+    LPAREN          shift and go to state 13
+    FUNCTION        shift and go to state 11
+
+    function_decl                  shift and go to state 16
+    function_call                  shift and go to state 3
+    expression                     shift and go to state 51
 
 state 32
 
     (7) statement -> expression SEMICOLON .
 
-    RBRACKET        reduce using rule 7 (statement -> expression SEMICOLON .)
     WHILE           reduce using rule 7 (statement -> expression SEMICOLON .)
     VAR             reduce using rule 7 (statement -> expression SEMICOLON .)
     ID              reduce using rule 7 (statement -> expression SEMICOLON .)
@@ -734,6 +758,7 @@ state 32
     IF              reduce using rule 7 (statement -> expression SEMICOLON .)
     FUNCTION        reduce using rule 7 (statement -> expression SEMICOLON .)
     $end            reduce using rule 7 (statement -> expression SEMICOLON .)
+    RBRACKET        reduce using rule 7 (statement -> expression SEMICOLON .)
 
 
 state 33
@@ -747,22 +772,23 @@ state 33
     (24) expression -> . expression OP_GTEQ expression
     (25) expression -> . expression OP_LT expression
     (26) expression -> . expression OP_LTEQ expression
-    (27) expression -> . ID
-    (28) expression -> . NUMBER
-    (29) expression -> . LPAREN expression RPAREN
-    (30) expression -> . function_call
-    (31) expression -> . function_decl
-    (32) function_call -> . ID LPAREN arguments RPAREN
-    (37) function_decl -> . FUNCTION LPAREN parameters RPAREN compound_statements
+    (27) expression -> . expression OP_EQ expression
+    (28) expression -> . ID
+    (29) expression -> . NUMBER
+    (30) expression -> . LPAREN expression RPAREN
+    (31) expression -> . function_call
+    (32) expression -> . function_decl
+    (33) function_call -> . expression LPAREN arguments RPAREN
+    (38) function_decl -> . FUNCTION LPAREN parameters RPAREN compound_statements
 
-    ID              shift and go to state 24
+    ID              shift and go to state 22
     NUMBER          shift and go to state 12
     LPAREN          shift and go to state 13
     FUNCTION        shift and go to state 11
 
     function_decl                  shift and go to state 16
     function_call                  shift and go to state 3
-    expression                     shift and go to state 53
+    expression                     shift and go to state 52
 
 state 34
 
@@ -775,22 +801,23 @@ state 34
     (24) expression -> . expression OP_GTEQ expression
     (25) expression -> . expression OP_LT expression
     (26) expression -> . expression OP_LTEQ expression
-    (27) expression -> . ID
-    (28) expression -> . NUMBER
-    (29) expression -> . LPAREN expression RPAREN
-    (30) expression -> . function_call
-    (31) expression -> . function_decl
-    (32) function_call -> . ID LPAREN arguments RPAREN
-    (37) function_decl -> . FUNCTION LPAREN parameters RPAREN compound_statements
+    (27) expression -> . expression OP_EQ expression
+    (28) expression -> . ID
+    (29) expression -> . NUMBER
+    (30) expression -> . LPAREN expression RPAREN
+    (31) expression -> . function_call
+    (32) expression -> . function_decl
+    (33) function_call -> . expression LPAREN arguments RPAREN
+    (38) function_decl -> . FUNCTION LPAREN parameters RPAREN compound_statements
 
-    ID              shift and go to state 24
+    ID              shift and go to state 22
     NUMBER          shift and go to state 12
     LPAREN          shift and go to state 13
     FUNCTION        shift and go to state 11
 
     function_decl                  shift and go to state 16
     function_call                  shift and go to state 3
-    expression                     shift and go to state 54
+    expression                     shift and go to state 53
 
 state 35
 
@@ -803,22 +830,23 @@ state 35
     (24) expression -> . expression OP_GTEQ expression
     (25) expression -> . expression OP_LT expression
     (26) expression -> . expression OP_LTEQ expression
-    (27) expression -> . ID
-    (28) expression -> . NUMBER
-    (29) expression -> . LPAREN expression RPAREN
-    (30) expression -> . function_call
-    (31) expression -> . function_decl
-    (32) function_call -> . ID LPAREN arguments RPAREN
-    (37) function_decl -> . FUNCTION LPAREN parameters RPAREN compound_statements
+    (27) expression -> . expression OP_EQ expression
+    (28) expression -> . ID
+    (29) expression -> . NUMBER
+    (30) expression -> . LPAREN expression RPAREN
+    (31) expression -> . function_call
+    (32) expression -> . function_decl
+    (33) function_call -> . expression LPAREN arguments RPAREN
+    (38) function_decl -> . FUNCTION LPAREN parameters RPAREN compound_statements
 
-    ID              shift and go to state 24
+    ID              shift and go to state 22
     NUMBER          shift and go to state 12
     LPAREN          shift and go to state 13
     FUNCTION        shift and go to state 11
 
     function_decl                  shift and go to state 16
     function_call                  shift and go to state 3
-    expression                     shift and go to state 55
+    expression                     shift and go to state 54
 
 state 36
 
@@ -831,22 +859,23 @@ state 36
     (24) expression -> . expression OP_GTEQ expression
     (25) expression -> . expression OP_LT expression
     (26) expression -> . expression OP_LTEQ expression
-    (27) expression -> . ID
-    (28) expression -> . NUMBER
-    (29) expression -> . LPAREN expression RPAREN
-    (30) expression -> . function_call
-    (31) expression -> . function_decl
-    (32) function_call -> . ID LPAREN arguments RPAREN
-    (37) function_decl -> . FUNCTION LPAREN parameters RPAREN compound_statements
+    (27) expression -> . expression OP_EQ expression
+    (28) expression -> . ID
+    (29) expression -> . NUMBER
+    (30) expression -> . LPAREN expression RPAREN
+    (31) expression -> . function_call
+    (32) expression -> . function_decl
+    (33) function_call -> . expression LPAREN arguments RPAREN
+    (38) function_decl -> . FUNCTION LPAREN parameters RPAREN compound_statements
 
-    ID              shift and go to state 24
+    ID              shift and go to state 22
     NUMBER          shift and go to state 12
     LPAREN          shift and go to state 13
     FUNCTION        shift and go to state 11
 
     function_decl                  shift and go to state 16
     function_call                  shift and go to state 3
-    expression                     shift and go to state 56
+    expression                     shift and go to state 55
 
 state 37
 
@@ -859,22 +888,23 @@ state 37
     (24) expression -> . expression OP_GTEQ expression
     (25) expression -> . expression OP_LT expression
     (26) expression -> . expression OP_LTEQ expression
-    (27) expression -> . ID
-    (28) expression -> . NUMBER
-    (29) expression -> . LPAREN expression RPAREN
-    (30) expression -> . function_call
-    (31) expression -> . function_decl
-    (32) function_call -> . ID LPAREN arguments RPAREN
-    (37) function_decl -> . FUNCTION LPAREN parameters RPAREN compound_statements
+    (27) expression -> . expression OP_EQ expression
+    (28) expression -> . ID
+    (29) expression -> . NUMBER
+    (30) expression -> . LPAREN expression RPAREN
+    (31) expression -> . function_call
+    (32) expression -> . function_decl
+    (33) function_call -> . expression LPAREN arguments RPAREN
+    (38) function_decl -> . FUNCTION LPAREN parameters RPAREN compound_statements
 
-    ID              shift and go to state 24
+    ID              shift and go to state 22
     NUMBER          shift and go to state 12
     LPAREN          shift and go to state 13
     FUNCTION        shift and go to state 11
 
     function_decl                  shift and go to state 16
     function_call                  shift and go to state 3
-    expression                     shift and go to state 57
+    expression                     shift and go to state 56
 
 state 38
 
@@ -887,24 +917,58 @@ state 38
     (24) expression -> . expression OP_GTEQ expression
     (25) expression -> . expression OP_LT expression
     (26) expression -> . expression OP_LTEQ expression
-    (27) expression -> . ID
-    (28) expression -> . NUMBER
-    (29) expression -> . LPAREN expression RPAREN
-    (30) expression -> . function_call
-    (31) expression -> . function_decl
-    (32) function_call -> . ID LPAREN arguments RPAREN
-    (37) function_decl -> . FUNCTION LPAREN parameters RPAREN compound_statements
+    (27) expression -> . expression OP_EQ expression
+    (28) expression -> . ID
+    (29) expression -> . NUMBER
+    (30) expression -> . LPAREN expression RPAREN
+    (31) expression -> . function_call
+    (32) expression -> . function_decl
+    (33) function_call -> . expression LPAREN arguments RPAREN
+    (38) function_decl -> . FUNCTION LPAREN parameters RPAREN compound_statements
 
-    ID              shift and go to state 24
+    ID              shift and go to state 22
     NUMBER          shift and go to state 12
     LPAREN          shift and go to state 13
     FUNCTION        shift and go to state 11
 
     function_decl                  shift and go to state 16
     function_call                  shift and go to state 3
-    expression                     shift and go to state 58
+    expression                     shift and go to state 57
 
 state 39
+
+    (33) function_call -> expression LPAREN . arguments RPAREN
+    (34) arguments -> . argument arguments_rest
+    (37) argument -> . expression
+    (19) expression -> . expression OP_PLUS expression
+    (20) expression -> . expression OP_MINUS expression
+    (21) expression -> . expression OP_TIMES expression
+    (22) expression -> . expression OP_DIVIDE expression
+    (23) expression -> . expression OP_GT expression
+    (24) expression -> . expression OP_GTEQ expression
+    (25) expression -> . expression OP_LT expression
+    (26) expression -> . expression OP_LTEQ expression
+    (27) expression -> . expression OP_EQ expression
+    (28) expression -> . ID
+    (29) expression -> . NUMBER
+    (30) expression -> . LPAREN expression RPAREN
+    (31) expression -> . function_call
+    (32) expression -> . function_decl
+    (33) function_call -> . expression LPAREN arguments RPAREN
+    (38) function_decl -> . FUNCTION LPAREN parameters RPAREN compound_statements
+
+    ID              shift and go to state 22
+    NUMBER          shift and go to state 12
+    LPAREN          shift and go to state 13
+    FUNCTION        shift and go to state 11
+
+    function_decl                  shift and go to state 16
+    argument                       shift and go to state 58
+    function_call                  shift and go to state 3
+    arguments                      shift and go to state 59
+    expression                     shift and go to state 60
+
+state 40
 
     (10) define_stmt -> VAR ID OP_EQUAL . expression SEMICOLON
     (19) expression -> . expression OP_PLUS expression
@@ -915,24 +979,25 @@ state 39
     (24) expression -> . expression OP_GTEQ expression
     (25) expression -> . expression OP_LT expression
     (26) expression -> . expression OP_LTEQ expression
-    (27) expression -> . ID
-    (28) expression -> . NUMBER
-    (29) expression -> . LPAREN expression RPAREN
-    (30) expression -> . function_call
-    (31) expression -> . function_decl
-    (32) function_call -> . ID LPAREN arguments RPAREN
-    (37) function_decl -> . FUNCTION LPAREN parameters RPAREN compound_statements
+    (27) expression -> . expression OP_EQ expression
+    (28) expression -> . ID
+    (29) expression -> . NUMBER
+    (30) expression -> . LPAREN expression RPAREN
+    (31) expression -> . function_call
+    (32) expression -> . function_decl
+    (33) function_call -> . expression LPAREN arguments RPAREN
+    (38) function_decl -> . FUNCTION LPAREN parameters RPAREN compound_statements
 
-    ID              shift and go to state 24
+    ID              shift and go to state 22
     NUMBER          shift and go to state 12
     LPAREN          shift and go to state 13
     FUNCTION        shift and go to state 11
 
     function_decl                  shift and go to state 16
     function_call                  shift and go to state 3
-    expression                     shift and go to state 59
+    expression                     shift and go to state 61
 
-state 40
+state 41
 
     (12) while_stmt -> WHILE LPAREN expression . RPAREN compound_statements
     (19) expression -> expression . OP_PLUS expression
@@ -943,19 +1008,23 @@ state 40
     (24) expression -> expression . OP_GTEQ expression
     (25) expression -> expression . OP_LT expression
     (26) expression -> expression . OP_LTEQ expression
+    (27) expression -> expression . OP_EQ expression
+    (33) function_call -> expression . LPAREN arguments RPAREN
 
-    RPAREN          shift and go to state 60
+    RPAREN          shift and go to state 62
     OP_PLUS         shift and go to state 38
     OP_MINUS        shift and go to state 33
     OP_TIMES        shift and go to state 35
-    OP_DIVIDE       shift and go to state 31
+    OP_DIVIDE       shift and go to state 30
     OP_GT           shift and go to state 36
     OP_GTEQ         shift and go to state 34
     OP_LT           shift and go to state 37
-    OP_LTEQ         shift and go to state 30
+    OP_LTEQ         shift and go to state 29
+    OP_EQ           shift and go to state 31
+    LPAREN          shift and go to state 39
 
 
-state 41
+state 42
 
     (14) return_stmt -> RETURN expression SEMICOLON .
 
@@ -971,92 +1040,52 @@ state 41
     RBRACKET        reduce using rule 14 (return_stmt -> RETURN expression SEMICOLON .)
 
 
-state 42
-
-    (37) function_decl -> FUNCTION LPAREN parameters . RPAREN compound_statements
-
-    RPAREN          shift and go to state 61
-
-
 state 43
 
-    (38) parameters -> parameter . parameters_rest
-    (39) parameters_rest -> . COMMA parameter parameters_rest
-    (40) parameters_rest -> .
+    (38) function_decl -> FUNCTION LPAREN parameters . RPAREN compound_statements
 
-    COMMA           shift and go to state 62
-    RPAREN          reduce using rule 40 (parameters_rest -> .)
+    RPAREN          shift and go to state 63
 
-    parameters_rest                shift and go to state 63
 
 state 44
 
-    (41) parameter -> ID .
+    (39) parameters -> parameter . parameters_rest
+    (40) parameters_rest -> . COMMA parameter parameters_rest
+    (41) parameters_rest -> .
 
-    COMMA           reduce using rule 41 (parameter -> ID .)
-    RPAREN          reduce using rule 41 (parameter -> ID .)
+    COMMA           shift and go to state 64
+    RPAREN          reduce using rule 41 (parameters_rest -> .)
 
+    parameters_rest                shift and go to state 65
 
 state 45
 
-    (29) expression -> LPAREN expression RPAREN .
+    (42) parameter -> ID .
 
-    OP_PLUS         reduce using rule 29 (expression -> LPAREN expression RPAREN .)
-    OP_MINUS        reduce using rule 29 (expression -> LPAREN expression RPAREN .)
-    OP_TIMES        reduce using rule 29 (expression -> LPAREN expression RPAREN .)
-    OP_DIVIDE       reduce using rule 29 (expression -> LPAREN expression RPAREN .)
-    OP_GT           reduce using rule 29 (expression -> LPAREN expression RPAREN .)
-    OP_GTEQ         reduce using rule 29 (expression -> LPAREN expression RPAREN .)
-    OP_LT           reduce using rule 29 (expression -> LPAREN expression RPAREN .)
-    OP_LTEQ         reduce using rule 29 (expression -> LPAREN expression RPAREN .)
-    SEMICOLON       reduce using rule 29 (expression -> LPAREN expression RPAREN .)
-    RPAREN          reduce using rule 29 (expression -> LPAREN expression RPAREN .)
-    COMMA           reduce using rule 29 (expression -> LPAREN expression RPAREN .)
+    COMMA           reduce using rule 42 (parameter -> ID .)
+    RPAREN          reduce using rule 42 (parameter -> ID .)
 
 
 state 46
 
-    (33) arguments -> argument . arguments_rest
-    (34) arguments_rest -> . COMMA argument arguments_rest
-    (35) arguments_rest -> .
+    (30) expression -> LPAREN expression RPAREN .
 
-    COMMA           shift and go to state 64
-    RPAREN          reduce using rule 35 (arguments_rest -> .)
+    OP_PLUS         reduce using rule 30 (expression -> LPAREN expression RPAREN .)
+    OP_MINUS        reduce using rule 30 (expression -> LPAREN expression RPAREN .)
+    OP_TIMES        reduce using rule 30 (expression -> LPAREN expression RPAREN .)
+    OP_DIVIDE       reduce using rule 30 (expression -> LPAREN expression RPAREN .)
+    OP_GT           reduce using rule 30 (expression -> LPAREN expression RPAREN .)
+    OP_GTEQ         reduce using rule 30 (expression -> LPAREN expression RPAREN .)
+    OP_LT           reduce using rule 30 (expression -> LPAREN expression RPAREN .)
+    OP_LTEQ         reduce using rule 30 (expression -> LPAREN expression RPAREN .)
+    OP_EQ           reduce using rule 30 (expression -> LPAREN expression RPAREN .)
+    LPAREN          reduce using rule 30 (expression -> LPAREN expression RPAREN .)
+    COMMA           reduce using rule 30 (expression -> LPAREN expression RPAREN .)
+    RPAREN          reduce using rule 30 (expression -> LPAREN expression RPAREN .)
+    SEMICOLON       reduce using rule 30 (expression -> LPAREN expression RPAREN .)
 
-    arguments_rest                 shift and go to state 65
 
 state 47
-
-    (32) function_call -> ID LPAREN arguments . RPAREN
-
-    RPAREN          shift and go to state 66
-
-
-state 48
-
-    (36) argument -> expression .
-    (19) expression -> expression . OP_PLUS expression
-    (20) expression -> expression . OP_MINUS expression
-    (21) expression -> expression . OP_TIMES expression
-    (22) expression -> expression . OP_DIVIDE expression
-    (23) expression -> expression . OP_GT expression
-    (24) expression -> expression . OP_GTEQ expression
-    (25) expression -> expression . OP_LT expression
-    (26) expression -> expression . OP_LTEQ expression
-
-    COMMA           reduce using rule 36 (argument -> expression .)
-    RPAREN          reduce using rule 36 (argument -> expression .)
-    OP_PLUS         shift and go to state 38
-    OP_MINUS        shift and go to state 33
-    OP_TIMES        shift and go to state 35
-    OP_DIVIDE       shift and go to state 31
-    OP_GT           shift and go to state 36
-    OP_GTEQ         shift and go to state 34
-    OP_LT           shift and go to state 37
-    OP_LTEQ         shift and go to state 30
-
-
-state 49
 
     (11) assign_stmt -> ID OP_EQUAL expression . SEMICOLON
     (19) expression -> expression . OP_PLUS expression
@@ -1067,19 +1096,23 @@ state 49
     (24) expression -> expression . OP_GTEQ expression
     (25) expression -> expression . OP_LT expression
     (26) expression -> expression . OP_LTEQ expression
+    (27) expression -> expression . OP_EQ expression
+    (33) function_call -> expression . LPAREN arguments RPAREN
 
-    SEMICOLON       shift and go to state 67
+    SEMICOLON       shift and go to state 66
     OP_PLUS         shift and go to state 38
     OP_MINUS        shift and go to state 33
     OP_TIMES        shift and go to state 35
-    OP_DIVIDE       shift and go to state 31
+    OP_DIVIDE       shift and go to state 30
     OP_GT           shift and go to state 36
     OP_GTEQ         shift and go to state 34
     OP_LT           shift and go to state 37
-    OP_LTEQ         shift and go to state 30
+    OP_LTEQ         shift and go to state 29
+    OP_EQ           shift and go to state 31
+    LPAREN          shift and go to state 39
 
 
-state 50
+state 48
 
     (15) if_stmt -> IF LPAREN expression . RPAREN compound_statements else_clause
     (19) expression -> expression . OP_PLUS expression
@@ -1090,19 +1123,23 @@ state 50
     (24) expression -> expression . OP_GTEQ expression
     (25) expression -> expression . OP_LT expression
     (26) expression -> expression . OP_LTEQ expression
+    (27) expression -> expression . OP_EQ expression
+    (33) function_call -> expression . LPAREN arguments RPAREN
 
-    RPAREN          shift and go to state 68
+    RPAREN          shift and go to state 67
     OP_PLUS         shift and go to state 38
     OP_MINUS        shift and go to state 33
     OP_TIMES        shift and go to state 35
-    OP_DIVIDE       shift and go to state 31
+    OP_DIVIDE       shift and go to state 30
     OP_GT           shift and go to state 36
     OP_GTEQ         shift and go to state 34
     OP_LT           shift and go to state 37
-    OP_LTEQ         shift and go to state 30
+    OP_LTEQ         shift and go to state 29
+    OP_EQ           shift and go to state 31
+    LPAREN          shift and go to state 39
 
 
-state 51
+state 49
 
     (26) expression -> expression OP_LTEQ expression .
     (19) expression -> expression . OP_PLUS expression
@@ -1113,30 +1150,36 @@ state 51
     (24) expression -> expression . OP_GTEQ expression
     (25) expression -> expression . OP_LT expression
     (26) expression -> expression . OP_LTEQ expression
+    (27) expression -> expression . OP_EQ expression
+    (33) function_call -> expression . LPAREN arguments RPAREN
 
     OP_GT           reduce using rule 26 (expression -> expression OP_LTEQ expression .)
     OP_GTEQ         reduce using rule 26 (expression -> expression OP_LTEQ expression .)
     OP_LT           reduce using rule 26 (expression -> expression OP_LTEQ expression .)
     OP_LTEQ         reduce using rule 26 (expression -> expression OP_LTEQ expression .)
-    SEMICOLON       reduce using rule 26 (expression -> expression OP_LTEQ expression .)
-    RPAREN          reduce using rule 26 (expression -> expression OP_LTEQ expression .)
+    OP_EQ           reduce using rule 26 (expression -> expression OP_LTEQ expression .)
     COMMA           reduce using rule 26 (expression -> expression OP_LTEQ expression .)
+    RPAREN          reduce using rule 26 (expression -> expression OP_LTEQ expression .)
+    SEMICOLON       reduce using rule 26 (expression -> expression OP_LTEQ expression .)
     OP_PLUS         shift and go to state 38
     OP_MINUS        shift and go to state 33
     OP_TIMES        shift and go to state 35
-    OP_DIVIDE       shift and go to state 31
+    OP_DIVIDE       shift and go to state 30
+    LPAREN          shift and go to state 39
 
   ! OP_PLUS         [ reduce using rule 26 (expression -> expression OP_LTEQ expression .) ]
   ! OP_MINUS        [ reduce using rule 26 (expression -> expression OP_LTEQ expression .) ]
   ! OP_TIMES        [ reduce using rule 26 (expression -> expression OP_LTEQ expression .) ]
   ! OP_DIVIDE       [ reduce using rule 26 (expression -> expression OP_LTEQ expression .) ]
+  ! LPAREN          [ reduce using rule 26 (expression -> expression OP_LTEQ expression .) ]
   ! OP_GT           [ shift and go to state 36 ]
   ! OP_GTEQ         [ shift and go to state 34 ]
   ! OP_LT           [ shift and go to state 37 ]
-  ! OP_LTEQ         [ shift and go to state 30 ]
+  ! OP_LTEQ         [ shift and go to state 29 ]
+  ! OP_EQ           [ shift and go to state 31 ]
 
 
-state 52
+state 50
 
     (22) expression -> expression OP_DIVIDE expression .
     (19) expression -> expression . OP_PLUS expression
@@ -1147,6 +1190,8 @@ state 52
     (24) expression -> expression . OP_GTEQ expression
     (25) expression -> expression . OP_LT expression
     (26) expression -> expression . OP_LTEQ expression
+    (27) expression -> expression . OP_EQ expression
+    (33) function_call -> expression . LPAREN arguments RPAREN
 
     OP_PLUS         reduce using rule 22 (expression -> expression OP_DIVIDE expression .)
     OP_MINUS        reduce using rule 22 (expression -> expression OP_DIVIDE expression .)
@@ -1156,21 +1201,65 @@ state 52
     OP_GTEQ         reduce using rule 22 (expression -> expression OP_DIVIDE expression .)
     OP_LT           reduce using rule 22 (expression -> expression OP_DIVIDE expression .)
     OP_LTEQ         reduce using rule 22 (expression -> expression OP_DIVIDE expression .)
-    SEMICOLON       reduce using rule 22 (expression -> expression OP_DIVIDE expression .)
-    RPAREN          reduce using rule 22 (expression -> expression OP_DIVIDE expression .)
+    OP_EQ           reduce using rule 22 (expression -> expression OP_DIVIDE expression .)
     COMMA           reduce using rule 22 (expression -> expression OP_DIVIDE expression .)
+    RPAREN          reduce using rule 22 (expression -> expression OP_DIVIDE expression .)
+    SEMICOLON       reduce using rule 22 (expression -> expression OP_DIVIDE expression .)
+    LPAREN          shift and go to state 39
 
+  ! LPAREN          [ reduce using rule 22 (expression -> expression OP_DIVIDE expression .) ]
   ! OP_PLUS         [ shift and go to state 38 ]
   ! OP_MINUS        [ shift and go to state 33 ]
   ! OP_TIMES        [ shift and go to state 35 ]
-  ! OP_DIVIDE       [ shift and go to state 31 ]
+  ! OP_DIVIDE       [ shift and go to state 30 ]
   ! OP_GT           [ shift and go to state 36 ]
   ! OP_GTEQ         [ shift and go to state 34 ]
   ! OP_LT           [ shift and go to state 37 ]
-  ! OP_LTEQ         [ shift and go to state 30 ]
+  ! OP_LTEQ         [ shift and go to state 29 ]
+  ! OP_EQ           [ shift and go to state 31 ]
 
 
-state 53
+state 51
+
+    (27) expression -> expression OP_EQ expression .
+    (19) expression -> expression . OP_PLUS expression
+    (20) expression -> expression . OP_MINUS expression
+    (21) expression -> expression . OP_TIMES expression
+    (22) expression -> expression . OP_DIVIDE expression
+    (23) expression -> expression . OP_GT expression
+    (24) expression -> expression . OP_GTEQ expression
+    (25) expression -> expression . OP_LT expression
+    (26) expression -> expression . OP_LTEQ expression
+    (27) expression -> expression . OP_EQ expression
+    (33) function_call -> expression . LPAREN arguments RPAREN
+
+    OP_GT           reduce using rule 27 (expression -> expression OP_EQ expression .)
+    OP_GTEQ         reduce using rule 27 (expression -> expression OP_EQ expression .)
+    OP_LT           reduce using rule 27 (expression -> expression OP_EQ expression .)
+    OP_LTEQ         reduce using rule 27 (expression -> expression OP_EQ expression .)
+    OP_EQ           reduce using rule 27 (expression -> expression OP_EQ expression .)
+    COMMA           reduce using rule 27 (expression -> expression OP_EQ expression .)
+    RPAREN          reduce using rule 27 (expression -> expression OP_EQ expression .)
+    SEMICOLON       reduce using rule 27 (expression -> expression OP_EQ expression .)
+    OP_PLUS         shift and go to state 38
+    OP_MINUS        shift and go to state 33
+    OP_TIMES        shift and go to state 35
+    OP_DIVIDE       shift and go to state 30
+    LPAREN          shift and go to state 39
+
+  ! OP_PLUS         [ reduce using rule 27 (expression -> expression OP_EQ expression .) ]
+  ! OP_MINUS        [ reduce using rule 27 (expression -> expression OP_EQ expression .) ]
+  ! OP_TIMES        [ reduce using rule 27 (expression -> expression OP_EQ expression .) ]
+  ! OP_DIVIDE       [ reduce using rule 27 (expression -> expression OP_EQ expression .) ]
+  ! LPAREN          [ reduce using rule 27 (expression -> expression OP_EQ expression .) ]
+  ! OP_GT           [ shift and go to state 36 ]
+  ! OP_GTEQ         [ shift and go to state 34 ]
+  ! OP_LT           [ shift and go to state 37 ]
+  ! OP_LTEQ         [ shift and go to state 29 ]
+  ! OP_EQ           [ shift and go to state 31 ]
+
+
+state 52
 
     (20) expression -> expression OP_MINUS expression .
     (19) expression -> expression . OP_PLUS expression
@@ -1181,6 +1270,8 @@ state 53
     (24) expression -> expression . OP_GTEQ expression
     (25) expression -> expression . OP_LT expression
     (26) expression -> expression . OP_LTEQ expression
+    (27) expression -> expression . OP_EQ expression
+    (33) function_call -> expression . LPAREN arguments RPAREN
 
     OP_PLUS         reduce using rule 20 (expression -> expression OP_MINUS expression .)
     OP_MINUS        reduce using rule 20 (expression -> expression OP_MINUS expression .)
@@ -1188,23 +1279,27 @@ state 53
     OP_GTEQ         reduce using rule 20 (expression -> expression OP_MINUS expression .)
     OP_LT           reduce using rule 20 (expression -> expression OP_MINUS expression .)
     OP_LTEQ         reduce using rule 20 (expression -> expression OP_MINUS expression .)
-    SEMICOLON       reduce using rule 20 (expression -> expression OP_MINUS expression .)
-    RPAREN          reduce using rule 20 (expression -> expression OP_MINUS expression .)
+    OP_EQ           reduce using rule 20 (expression -> expression OP_MINUS expression .)
     COMMA           reduce using rule 20 (expression -> expression OP_MINUS expression .)
+    RPAREN          reduce using rule 20 (expression -> expression OP_MINUS expression .)
+    SEMICOLON       reduce using rule 20 (expression -> expression OP_MINUS expression .)
     OP_TIMES        shift and go to state 35
-    OP_DIVIDE       shift and go to state 31
+    OP_DIVIDE       shift and go to state 30
+    LPAREN          shift and go to state 39
 
   ! OP_TIMES        [ reduce using rule 20 (expression -> expression OP_MINUS expression .) ]
   ! OP_DIVIDE       [ reduce using rule 20 (expression -> expression OP_MINUS expression .) ]
+  ! LPAREN          [ reduce using rule 20 (expression -> expression OP_MINUS expression .) ]
   ! OP_PLUS         [ shift and go to state 38 ]
   ! OP_MINUS        [ shift and go to state 33 ]
   ! OP_GT           [ shift and go to state 36 ]
   ! OP_GTEQ         [ shift and go to state 34 ]
   ! OP_LT           [ shift and go to state 37 ]
-  ! OP_LTEQ         [ shift and go to state 30 ]
+  ! OP_LTEQ         [ shift and go to state 29 ]
+  ! OP_EQ           [ shift and go to state 31 ]
 
 
-state 54
+state 53
 
     (24) expression -> expression OP_GTEQ expression .
     (19) expression -> expression . OP_PLUS expression
@@ -1215,30 +1310,36 @@ state 54
     (24) expression -> expression . OP_GTEQ expression
     (25) expression -> expression . OP_LT expression
     (26) expression -> expression . OP_LTEQ expression
+    (27) expression -> expression . OP_EQ expression
+    (33) function_call -> expression . LPAREN arguments RPAREN
 
     OP_GT           reduce using rule 24 (expression -> expression OP_GTEQ expression .)
     OP_GTEQ         reduce using rule 24 (expression -> expression OP_GTEQ expression .)
     OP_LT           reduce using rule 24 (expression -> expression OP_GTEQ expression .)
     OP_LTEQ         reduce using rule 24 (expression -> expression OP_GTEQ expression .)
-    SEMICOLON       reduce using rule 24 (expression -> expression OP_GTEQ expression .)
-    RPAREN          reduce using rule 24 (expression -> expression OP_GTEQ expression .)
+    OP_EQ           reduce using rule 24 (expression -> expression OP_GTEQ expression .)
     COMMA           reduce using rule 24 (expression -> expression OP_GTEQ expression .)
+    RPAREN          reduce using rule 24 (expression -> expression OP_GTEQ expression .)
+    SEMICOLON       reduce using rule 24 (expression -> expression OP_GTEQ expression .)
     OP_PLUS         shift and go to state 38
     OP_MINUS        shift and go to state 33
     OP_TIMES        shift and go to state 35
-    OP_DIVIDE       shift and go to state 31
+    OP_DIVIDE       shift and go to state 30
+    LPAREN          shift and go to state 39
 
   ! OP_PLUS         [ reduce using rule 24 (expression -> expression OP_GTEQ expression .) ]
   ! OP_MINUS        [ reduce using rule 24 (expression -> expression OP_GTEQ expression .) ]
   ! OP_TIMES        [ reduce using rule 24 (expression -> expression OP_GTEQ expression .) ]
   ! OP_DIVIDE       [ reduce using rule 24 (expression -> expression OP_GTEQ expression .) ]
+  ! LPAREN          [ reduce using rule 24 (expression -> expression OP_GTEQ expression .) ]
   ! OP_GT           [ shift and go to state 36 ]
   ! OP_GTEQ         [ shift and go to state 34 ]
   ! OP_LT           [ shift and go to state 37 ]
-  ! OP_LTEQ         [ shift and go to state 30 ]
+  ! OP_LTEQ         [ shift and go to state 29 ]
+  ! OP_EQ           [ shift and go to state 31 ]
 
 
-state 55
+state 54
 
     (21) expression -> expression OP_TIMES expression .
     (19) expression -> expression . OP_PLUS expression
@@ -1249,6 +1350,8 @@ state 55
     (24) expression -> expression . OP_GTEQ expression
     (25) expression -> expression . OP_LT expression
     (26) expression -> expression . OP_LTEQ expression
+    (27) expression -> expression . OP_EQ expression
+    (33) function_call -> expression . LPAREN arguments RPAREN
 
     OP_PLUS         reduce using rule 21 (expression -> expression OP_TIMES expression .)
     OP_MINUS        reduce using rule 21 (expression -> expression OP_TIMES expression .)
@@ -1258,21 +1361,25 @@ state 55
     OP_GTEQ         reduce using rule 21 (expression -> expression OP_TIMES expression .)
     OP_LT           reduce using rule 21 (expression -> expression OP_TIMES expression .)
     OP_LTEQ         reduce using rule 21 (expression -> expression OP_TIMES expression .)
-    SEMICOLON       reduce using rule 21 (expression -> expression OP_TIMES expression .)
-    RPAREN          reduce using rule 21 (expression -> expression OP_TIMES expression .)
+    OP_EQ           reduce using rule 21 (expression -> expression OP_TIMES expression .)
     COMMA           reduce using rule 21 (expression -> expression OP_TIMES expression .)
+    RPAREN          reduce using rule 21 (expression -> expression OP_TIMES expression .)
+    SEMICOLON       reduce using rule 21 (expression -> expression OP_TIMES expression .)
+    LPAREN          shift and go to state 39
 
+  ! LPAREN          [ reduce using rule 21 (expression -> expression OP_TIMES expression .) ]
   ! OP_PLUS         [ shift and go to state 38 ]
   ! OP_MINUS        [ shift and go to state 33 ]
   ! OP_TIMES        [ shift and go to state 35 ]
-  ! OP_DIVIDE       [ shift and go to state 31 ]
+  ! OP_DIVIDE       [ shift and go to state 30 ]
   ! OP_GT           [ shift and go to state 36 ]
   ! OP_GTEQ         [ shift and go to state 34 ]
   ! OP_LT           [ shift and go to state 37 ]
-  ! OP_LTEQ         [ shift and go to state 30 ]
+  ! OP_LTEQ         [ shift and go to state 29 ]
+  ! OP_EQ           [ shift and go to state 31 ]
 
 
-state 56
+state 55
 
     (23) expression -> expression OP_GT expression .
     (19) expression -> expression . OP_PLUS expression
@@ -1283,30 +1390,36 @@ state 56
     (24) expression -> expression . OP_GTEQ expression
     (25) expression -> expression . OP_LT expression
     (26) expression -> expression . OP_LTEQ expression
+    (27) expression -> expression . OP_EQ expression
+    (33) function_call -> expression . LPAREN arguments RPAREN
 
     OP_GT           reduce using rule 23 (expression -> expression OP_GT expression .)
     OP_GTEQ         reduce using rule 23 (expression -> expression OP_GT expression .)
     OP_LT           reduce using rule 23 (expression -> expression OP_GT expression .)
     OP_LTEQ         reduce using rule 23 (expression -> expression OP_GT expression .)
-    SEMICOLON       reduce using rule 23 (expression -> expression OP_GT expression .)
-    RPAREN          reduce using rule 23 (expression -> expression OP_GT expression .)
+    OP_EQ           reduce using rule 23 (expression -> expression OP_GT expression .)
     COMMA           reduce using rule 23 (expression -> expression OP_GT expression .)
+    RPAREN          reduce using rule 23 (expression -> expression OP_GT expression .)
+    SEMICOLON       reduce using rule 23 (expression -> expression OP_GT expression .)
     OP_PLUS         shift and go to state 38
     OP_MINUS        shift and go to state 33
     OP_TIMES        shift and go to state 35
-    OP_DIVIDE       shift and go to state 31
+    OP_DIVIDE       shift and go to state 30
+    LPAREN          shift and go to state 39
 
   ! OP_PLUS         [ reduce using rule 23 (expression -> expression OP_GT expression .) ]
   ! OP_MINUS        [ reduce using rule 23 (expression -> expression OP_GT expression .) ]
   ! OP_TIMES        [ reduce using rule 23 (expression -> expression OP_GT expression .) ]
   ! OP_DIVIDE       [ reduce using rule 23 (expression -> expression OP_GT expression .) ]
+  ! LPAREN          [ reduce using rule 23 (expression -> expression OP_GT expression .) ]
   ! OP_GT           [ shift and go to state 36 ]
   ! OP_GTEQ         [ shift and go to state 34 ]
   ! OP_LT           [ shift and go to state 37 ]
-  ! OP_LTEQ         [ shift and go to state 30 ]
+  ! OP_LTEQ         [ shift and go to state 29 ]
+  ! OP_EQ           [ shift and go to state 31 ]
 
 
-state 57
+state 56
 
     (25) expression -> expression OP_LT expression .
     (19) expression -> expression . OP_PLUS expression
@@ -1317,30 +1430,36 @@ state 57
     (24) expression -> expression . OP_GTEQ expression
     (25) expression -> expression . OP_LT expression
     (26) expression -> expression . OP_LTEQ expression
+    (27) expression -> expression . OP_EQ expression
+    (33) function_call -> expression . LPAREN arguments RPAREN
 
     OP_GT           reduce using rule 25 (expression -> expression OP_LT expression .)
     OP_GTEQ         reduce using rule 25 (expression -> expression OP_LT expression .)
     OP_LT           reduce using rule 25 (expression -> expression OP_LT expression .)
     OP_LTEQ         reduce using rule 25 (expression -> expression OP_LT expression .)
-    SEMICOLON       reduce using rule 25 (expression -> expression OP_LT expression .)
-    RPAREN          reduce using rule 25 (expression -> expression OP_LT expression .)
+    OP_EQ           reduce using rule 25 (expression -> expression OP_LT expression .)
     COMMA           reduce using rule 25 (expression -> expression OP_LT expression .)
+    RPAREN          reduce using rule 25 (expression -> expression OP_LT expression .)
+    SEMICOLON       reduce using rule 25 (expression -> expression OP_LT expression .)
     OP_PLUS         shift and go to state 38
     OP_MINUS        shift and go to state 33
     OP_TIMES        shift and go to state 35
-    OP_DIVIDE       shift and go to state 31
+    OP_DIVIDE       shift and go to state 30
+    LPAREN          shift and go to state 39
 
   ! OP_PLUS         [ reduce using rule 25 (expression -> expression OP_LT expression .) ]
   ! OP_MINUS        [ reduce using rule 25 (expression -> expression OP_LT expression .) ]
   ! OP_TIMES        [ reduce using rule 25 (expression -> expression OP_LT expression .) ]
   ! OP_DIVIDE       [ reduce using rule 25 (expression -> expression OP_LT expression .) ]
+  ! LPAREN          [ reduce using rule 25 (expression -> expression OP_LT expression .) ]
   ! OP_GT           [ shift and go to state 36 ]
   ! OP_GTEQ         [ shift and go to state 34 ]
   ! OP_LT           [ shift and go to state 37 ]
-  ! OP_LTEQ         [ shift and go to state 30 ]
+  ! OP_LTEQ         [ shift and go to state 29 ]
+  ! OP_EQ           [ shift and go to state 31 ]
 
 
-state 58
+state 57
 
     (19) expression -> expression OP_PLUS expression .
     (19) expression -> expression . OP_PLUS expression
@@ -1351,6 +1470,8 @@ state 58
     (24) expression -> expression . OP_GTEQ expression
     (25) expression -> expression . OP_LT expression
     (26) expression -> expression . OP_LTEQ expression
+    (27) expression -> expression . OP_EQ expression
+    (33) function_call -> expression . LPAREN arguments RPAREN
 
     OP_PLUS         reduce using rule 19 (expression -> expression OP_PLUS expression .)
     OP_MINUS        reduce using rule 19 (expression -> expression OP_PLUS expression .)
@@ -1358,23 +1479,73 @@ state 58
     OP_GTEQ         reduce using rule 19 (expression -> expression OP_PLUS expression .)
     OP_LT           reduce using rule 19 (expression -> expression OP_PLUS expression .)
     OP_LTEQ         reduce using rule 19 (expression -> expression OP_PLUS expression .)
-    SEMICOLON       reduce using rule 19 (expression -> expression OP_PLUS expression .)
-    RPAREN          reduce using rule 19 (expression -> expression OP_PLUS expression .)
+    OP_EQ           reduce using rule 19 (expression -> expression OP_PLUS expression .)
     COMMA           reduce using rule 19 (expression -> expression OP_PLUS expression .)
+    RPAREN          reduce using rule 19 (expression -> expression OP_PLUS expression .)
+    SEMICOLON       reduce using rule 19 (expression -> expression OP_PLUS expression .)
     OP_TIMES        shift and go to state 35
-    OP_DIVIDE       shift and go to state 31
+    OP_DIVIDE       shift and go to state 30
+    LPAREN          shift and go to state 39
 
   ! OP_TIMES        [ reduce using rule 19 (expression -> expression OP_PLUS expression .) ]
   ! OP_DIVIDE       [ reduce using rule 19 (expression -> expression OP_PLUS expression .) ]
+  ! LPAREN          [ reduce using rule 19 (expression -> expression OP_PLUS expression .) ]
   ! OP_PLUS         [ shift and go to state 38 ]
   ! OP_MINUS        [ shift and go to state 33 ]
   ! OP_GT           [ shift and go to state 36 ]
   ! OP_GTEQ         [ shift and go to state 34 ]
   ! OP_LT           [ shift and go to state 37 ]
-  ! OP_LTEQ         [ shift and go to state 30 ]
+  ! OP_LTEQ         [ shift and go to state 29 ]
+  ! OP_EQ           [ shift and go to state 31 ]
 
+
+state 58
+
+    (34) arguments -> argument . arguments_rest
+    (35) arguments_rest -> . COMMA argument arguments_rest
+    (36) arguments_rest -> .
+
+    COMMA           shift and go to state 68
+    RPAREN          reduce using rule 36 (arguments_rest -> .)
+
+    arguments_rest                 shift and go to state 69
 
 state 59
+
+    (33) function_call -> expression LPAREN arguments . RPAREN
+
+    RPAREN          shift and go to state 70
+
+
+state 60
+
+    (37) argument -> expression .
+    (19) expression -> expression . OP_PLUS expression
+    (20) expression -> expression . OP_MINUS expression
+    (21) expression -> expression . OP_TIMES expression
+    (22) expression -> expression . OP_DIVIDE expression
+    (23) expression -> expression . OP_GT expression
+    (24) expression -> expression . OP_GTEQ expression
+    (25) expression -> expression . OP_LT expression
+    (26) expression -> expression . OP_LTEQ expression
+    (27) expression -> expression . OP_EQ expression
+    (33) function_call -> expression . LPAREN arguments RPAREN
+
+    COMMA           reduce using rule 37 (argument -> expression .)
+    RPAREN          reduce using rule 37 (argument -> expression .)
+    OP_PLUS         shift and go to state 38
+    OP_MINUS        shift and go to state 33
+    OP_TIMES        shift and go to state 35
+    OP_DIVIDE       shift and go to state 30
+    OP_GT           shift and go to state 36
+    OP_GTEQ         shift and go to state 34
+    OP_LT           shift and go to state 37
+    OP_LTEQ         shift and go to state 29
+    OP_EQ           shift and go to state 31
+    LPAREN          shift and go to state 39
+
+
+state 61
 
     (10) define_stmt -> VAR ID OP_EQUAL expression . SEMICOLON
     (19) expression -> expression . OP_PLUS expression
@@ -1385,110 +1556,61 @@ state 59
     (24) expression -> expression . OP_GTEQ expression
     (25) expression -> expression . OP_LT expression
     (26) expression -> expression . OP_LTEQ expression
+    (27) expression -> expression . OP_EQ expression
+    (33) function_call -> expression . LPAREN arguments RPAREN
 
-    SEMICOLON       shift and go to state 69
+    SEMICOLON       shift and go to state 71
     OP_PLUS         shift and go to state 38
     OP_MINUS        shift and go to state 33
     OP_TIMES        shift and go to state 35
-    OP_DIVIDE       shift and go to state 31
+    OP_DIVIDE       shift and go to state 30
     OP_GT           shift and go to state 36
     OP_GTEQ         shift and go to state 34
     OP_LT           shift and go to state 37
-    OP_LTEQ         shift and go to state 30
+    OP_LTEQ         shift and go to state 29
+    OP_EQ           shift and go to state 31
+    LPAREN          shift and go to state 39
 
 
-state 60
+state 62
 
     (12) while_stmt -> WHILE LPAREN expression RPAREN . compound_statements
     (18) compound_statements -> . LBRACKET statements RBRACKET
 
-    LBRACKET        shift and go to state 70
+    LBRACKET        shift and go to state 72
 
-    compound_statements            shift and go to state 71
-
-state 61
-
-    (37) function_decl -> FUNCTION LPAREN parameters RPAREN . compound_statements
-    (18) compound_statements -> . LBRACKET statements RBRACKET
-
-    LBRACKET        shift and go to state 70
-
-    compound_statements            shift and go to state 72
-
-state 62
-
-    (39) parameters_rest -> COMMA . parameter parameters_rest
-    (41) parameter -> . ID
-
-    ID              shift and go to state 44
-
-    parameter                      shift and go to state 73
+    compound_statements            shift and go to state 73
 
 state 63
 
-    (38) parameters -> parameter parameters_rest .
+    (38) function_decl -> FUNCTION LPAREN parameters RPAREN . compound_statements
+    (18) compound_statements -> . LBRACKET statements RBRACKET
 
-    RPAREN          reduce using rule 38 (parameters -> parameter parameters_rest .)
+    LBRACKET        shift and go to state 72
 
+    compound_statements            shift and go to state 74
 
 state 64
 
-    (34) arguments_rest -> COMMA . argument arguments_rest
-    (36) argument -> . expression
-    (19) expression -> . expression OP_PLUS expression
-    (20) expression -> . expression OP_MINUS expression
-    (21) expression -> . expression OP_TIMES expression
-    (22) expression -> . expression OP_DIVIDE expression
-    (23) expression -> . expression OP_GT expression
-    (24) expression -> . expression OP_GTEQ expression
-    (25) expression -> . expression OP_LT expression
-    (26) expression -> . expression OP_LTEQ expression
-    (27) expression -> . ID
-    (28) expression -> . NUMBER
-    (29) expression -> . LPAREN expression RPAREN
-    (30) expression -> . function_call
-    (31) expression -> . function_decl
-    (32) function_call -> . ID LPAREN arguments RPAREN
-    (37) function_decl -> . FUNCTION LPAREN parameters RPAREN compound_statements
+    (40) parameters_rest -> COMMA . parameter parameters_rest
+    (42) parameter -> . ID
 
-    ID              shift and go to state 24
-    NUMBER          shift and go to state 12
-    LPAREN          shift and go to state 13
-    FUNCTION        shift and go to state 11
+    ID              shift and go to state 45
 
-    function_decl                  shift and go to state 16
-    argument                       shift and go to state 74
-    function_call                  shift and go to state 3
-    expression                     shift and go to state 48
+    parameter                      shift and go to state 75
 
 state 65
 
-    (33) arguments -> argument arguments_rest .
+    (39) parameters -> parameter parameters_rest .
 
-    RPAREN          reduce using rule 33 (arguments -> argument arguments_rest .)
+    RPAREN          reduce using rule 39 (parameters -> parameter parameters_rest .)
 
 
 state 66
 
-    (32) function_call -> ID LPAREN arguments RPAREN .
-
-    RPAREN          reduce using rule 32 (function_call -> ID LPAREN arguments RPAREN .)
-    OP_PLUS         reduce using rule 32 (function_call -> ID LPAREN arguments RPAREN .)
-    OP_MINUS        reduce using rule 32 (function_call -> ID LPAREN arguments RPAREN .)
-    OP_TIMES        reduce using rule 32 (function_call -> ID LPAREN arguments RPAREN .)
-    OP_DIVIDE       reduce using rule 32 (function_call -> ID LPAREN arguments RPAREN .)
-    OP_GT           reduce using rule 32 (function_call -> ID LPAREN arguments RPAREN .)
-    OP_GTEQ         reduce using rule 32 (function_call -> ID LPAREN arguments RPAREN .)
-    OP_LT           reduce using rule 32 (function_call -> ID LPAREN arguments RPAREN .)
-    OP_LTEQ         reduce using rule 32 (function_call -> ID LPAREN arguments RPAREN .)
-    COMMA           reduce using rule 32 (function_call -> ID LPAREN arguments RPAREN .)
-    SEMICOLON       reduce using rule 32 (function_call -> ID LPAREN arguments RPAREN .)
-
-
-state 67
-
     (11) assign_stmt -> ID OP_EQUAL expression SEMICOLON .
 
+    RBRACKET        reduce using rule 11 (assign_stmt -> ID OP_EQUAL expression SEMICOLON .)
     WHILE           reduce using rule 11 (assign_stmt -> ID OP_EQUAL expression SEMICOLON .)
     VAR             reduce using rule 11 (assign_stmt -> ID OP_EQUAL expression SEMICOLON .)
     ID              reduce using rule 11 (assign_stmt -> ID OP_EQUAL expression SEMICOLON .)
@@ -1498,23 +1620,78 @@ state 67
     IF              reduce using rule 11 (assign_stmt -> ID OP_EQUAL expression SEMICOLON .)
     FUNCTION        reduce using rule 11 (assign_stmt -> ID OP_EQUAL expression SEMICOLON .)
     $end            reduce using rule 11 (assign_stmt -> ID OP_EQUAL expression SEMICOLON .)
-    RBRACKET        reduce using rule 11 (assign_stmt -> ID OP_EQUAL expression SEMICOLON .)
 
 
-state 68
+state 67
 
     (15) if_stmt -> IF LPAREN expression RPAREN . compound_statements else_clause
     (18) compound_statements -> . LBRACKET statements RBRACKET
 
-    LBRACKET        shift and go to state 70
+    LBRACKET        shift and go to state 72
 
-    compound_statements            shift and go to state 75
+    compound_statements            shift and go to state 76
+
+state 68
+
+    (35) arguments_rest -> COMMA . argument arguments_rest
+    (37) argument -> . expression
+    (19) expression -> . expression OP_PLUS expression
+    (20) expression -> . expression OP_MINUS expression
+    (21) expression -> . expression OP_TIMES expression
+    (22) expression -> . expression OP_DIVIDE expression
+    (23) expression -> . expression OP_GT expression
+    (24) expression -> . expression OP_GTEQ expression
+    (25) expression -> . expression OP_LT expression
+    (26) expression -> . expression OP_LTEQ expression
+    (27) expression -> . expression OP_EQ expression
+    (28) expression -> . ID
+    (29) expression -> . NUMBER
+    (30) expression -> . LPAREN expression RPAREN
+    (31) expression -> . function_call
+    (32) expression -> . function_decl
+    (33) function_call -> . expression LPAREN arguments RPAREN
+    (38) function_decl -> . FUNCTION LPAREN parameters RPAREN compound_statements
+
+    ID              shift and go to state 22
+    NUMBER          shift and go to state 12
+    LPAREN          shift and go to state 13
+    FUNCTION        shift and go to state 11
+
+    function_decl                  shift and go to state 16
+    argument                       shift and go to state 77
+    function_call                  shift and go to state 3
+    expression                     shift and go to state 60
 
 state 69
 
+    (34) arguments -> argument arguments_rest .
+
+    RPAREN          reduce using rule 34 (arguments -> argument arguments_rest .)
+
+
+state 70
+
+    (33) function_call -> expression LPAREN arguments RPAREN .
+
+    OP_PLUS         reduce using rule 33 (function_call -> expression LPAREN arguments RPAREN .)
+    OP_MINUS        reduce using rule 33 (function_call -> expression LPAREN arguments RPAREN .)
+    OP_TIMES        reduce using rule 33 (function_call -> expression LPAREN arguments RPAREN .)
+    OP_DIVIDE       reduce using rule 33 (function_call -> expression LPAREN arguments RPAREN .)
+    OP_GT           reduce using rule 33 (function_call -> expression LPAREN arguments RPAREN .)
+    OP_GTEQ         reduce using rule 33 (function_call -> expression LPAREN arguments RPAREN .)
+    OP_LT           reduce using rule 33 (function_call -> expression LPAREN arguments RPAREN .)
+    OP_LTEQ         reduce using rule 33 (function_call -> expression LPAREN arguments RPAREN .)
+    OP_EQ           reduce using rule 33 (function_call -> expression LPAREN arguments RPAREN .)
+    LPAREN          reduce using rule 33 (function_call -> expression LPAREN arguments RPAREN .)
+    SEMICOLON       reduce using rule 33 (function_call -> expression LPAREN arguments RPAREN .)
+    RPAREN          reduce using rule 33 (function_call -> expression LPAREN arguments RPAREN .)
+    COMMA           reduce using rule 33 (function_call -> expression LPAREN arguments RPAREN .)
+
+
+state 71
+
     (10) define_stmt -> VAR ID OP_EQUAL expression SEMICOLON .
 
-    RBRACKET        reduce using rule 10 (define_stmt -> VAR ID OP_EQUAL expression SEMICOLON .)
     WHILE           reduce using rule 10 (define_stmt -> VAR ID OP_EQUAL expression SEMICOLON .)
     VAR             reduce using rule 10 (define_stmt -> VAR ID OP_EQUAL expression SEMICOLON .)
     ID              reduce using rule 10 (define_stmt -> VAR ID OP_EQUAL expression SEMICOLON .)
@@ -1524,9 +1701,10 @@ state 69
     IF              reduce using rule 10 (define_stmt -> VAR ID OP_EQUAL expression SEMICOLON .)
     FUNCTION        reduce using rule 10 (define_stmt -> VAR ID OP_EQUAL expression SEMICOLON .)
     $end            reduce using rule 10 (define_stmt -> VAR ID OP_EQUAL expression SEMICOLON .)
+    RBRACKET        reduce using rule 10 (define_stmt -> VAR ID OP_EQUAL expression SEMICOLON .)
 
 
-state 70
+state 72
 
     (18) compound_statements -> LBRACKET . statements RBRACKET
     (2) statements -> . statements statement
@@ -1542,9 +1720,9 @@ state 70
     IF              reduce using rule 3 (statements -> .)
     FUNCTION        reduce using rule 3 (statements -> .)
 
-    statements                     shift and go to state 76
+    statements                     shift and go to state 78
 
-state 71
+state 73
 
     (12) while_stmt -> WHILE LPAREN expression RPAREN compound_statements .
 
@@ -1560,46 +1738,37 @@ state 71
     RBRACKET        reduce using rule 12 (while_stmt -> WHILE LPAREN expression RPAREN compound_statements .)
 
 
-state 72
-
-    (37) function_decl -> FUNCTION LPAREN parameters RPAREN compound_statements .
-
-    OP_PLUS         reduce using rule 37 (function_decl -> FUNCTION LPAREN parameters RPAREN compound_statements .)
-    OP_MINUS        reduce using rule 37 (function_decl -> FUNCTION LPAREN parameters RPAREN compound_statements .)
-    OP_TIMES        reduce using rule 37 (function_decl -> FUNCTION LPAREN parameters RPAREN compound_statements .)
-    OP_DIVIDE       reduce using rule 37 (function_decl -> FUNCTION LPAREN parameters RPAREN compound_statements .)
-    OP_GT           reduce using rule 37 (function_decl -> FUNCTION LPAREN parameters RPAREN compound_statements .)
-    OP_GTEQ         reduce using rule 37 (function_decl -> FUNCTION LPAREN parameters RPAREN compound_statements .)
-    OP_LT           reduce using rule 37 (function_decl -> FUNCTION LPAREN parameters RPAREN compound_statements .)
-    OP_LTEQ         reduce using rule 37 (function_decl -> FUNCTION LPAREN parameters RPAREN compound_statements .)
-    SEMICOLON       reduce using rule 37 (function_decl -> FUNCTION LPAREN parameters RPAREN compound_statements .)
-    RPAREN          reduce using rule 37 (function_decl -> FUNCTION LPAREN parameters RPAREN compound_statements .)
-    COMMA           reduce using rule 37 (function_decl -> FUNCTION LPAREN parameters RPAREN compound_statements .)
-
-
-state 73
-
-    (39) parameters_rest -> COMMA parameter . parameters_rest
-    (39) parameters_rest -> . COMMA parameter parameters_rest
-    (40) parameters_rest -> .
-
-    COMMA           shift and go to state 62
-    RPAREN          reduce using rule 40 (parameters_rest -> .)
-
-    parameters_rest                shift and go to state 77
-
 state 74
 
-    (34) arguments_rest -> COMMA argument . arguments_rest
-    (34) arguments_rest -> . COMMA argument arguments_rest
-    (35) arguments_rest -> .
+    (38) function_decl -> FUNCTION LPAREN parameters RPAREN compound_statements .
 
-    COMMA           shift and go to state 64
-    RPAREN          reduce using rule 35 (arguments_rest -> .)
+    SEMICOLON       reduce using rule 38 (function_decl -> FUNCTION LPAREN parameters RPAREN compound_statements .)
+    OP_PLUS         reduce using rule 38 (function_decl -> FUNCTION LPAREN parameters RPAREN compound_statements .)
+    OP_MINUS        reduce using rule 38 (function_decl -> FUNCTION LPAREN parameters RPAREN compound_statements .)
+    OP_TIMES        reduce using rule 38 (function_decl -> FUNCTION LPAREN parameters RPAREN compound_statements .)
+    OP_DIVIDE       reduce using rule 38 (function_decl -> FUNCTION LPAREN parameters RPAREN compound_statements .)
+    OP_GT           reduce using rule 38 (function_decl -> FUNCTION LPAREN parameters RPAREN compound_statements .)
+    OP_GTEQ         reduce using rule 38 (function_decl -> FUNCTION LPAREN parameters RPAREN compound_statements .)
+    OP_LT           reduce using rule 38 (function_decl -> FUNCTION LPAREN parameters RPAREN compound_statements .)
+    OP_LTEQ         reduce using rule 38 (function_decl -> FUNCTION LPAREN parameters RPAREN compound_statements .)
+    OP_EQ           reduce using rule 38 (function_decl -> FUNCTION LPAREN parameters RPAREN compound_statements .)
+    LPAREN          reduce using rule 38 (function_decl -> FUNCTION LPAREN parameters RPAREN compound_statements .)
+    RPAREN          reduce using rule 38 (function_decl -> FUNCTION LPAREN parameters RPAREN compound_statements .)
+    COMMA           reduce using rule 38 (function_decl -> FUNCTION LPAREN parameters RPAREN compound_statements .)
 
-    arguments_rest                 shift and go to state 78
 
 state 75
+
+    (40) parameters_rest -> COMMA parameter . parameters_rest
+    (40) parameters_rest -> . COMMA parameter parameters_rest
+    (41) parameters_rest -> .
+
+    COMMA           shift and go to state 64
+    RPAREN          reduce using rule 41 (parameters_rest -> .)
+
+    parameters_rest                shift and go to state 79
+
+state 76
 
     (15) if_stmt -> IF LPAREN expression RPAREN compound_statements . else_clause
     (16) else_clause -> .
@@ -1615,11 +1784,22 @@ state 75
     FUNCTION        reduce using rule 16 (else_clause -> .)
     $end            reduce using rule 16 (else_clause -> .)
     RBRACKET        reduce using rule 16 (else_clause -> .)
-    ELSE            shift and go to state 79
+    ELSE            shift and go to state 80
 
-    else_clause                    shift and go to state 80
+    else_clause                    shift and go to state 81
 
-state 76
+state 77
+
+    (35) arguments_rest -> COMMA argument . arguments_rest
+    (35) arguments_rest -> . COMMA argument arguments_rest
+    (36) arguments_rest -> .
+
+    COMMA           shift and go to state 68
+    RPAREN          reduce using rule 36 (arguments_rest -> .)
+
+    arguments_rest                 shift and go to state 82
+
+state 78
 
     (18) compound_statements -> LBRACKET statements . RBRACKET
     (2) statements -> statements . statement
@@ -1640,18 +1820,19 @@ state 76
     (24) expression -> . expression OP_GTEQ expression
     (25) expression -> . expression OP_LT expression
     (26) expression -> . expression OP_LTEQ expression
-    (27) expression -> . ID
-    (28) expression -> . NUMBER
-    (29) expression -> . LPAREN expression RPAREN
-    (30) expression -> . function_call
-    (31) expression -> . function_decl
+    (27) expression -> . expression OP_EQ expression
+    (28) expression -> . ID
+    (29) expression -> . NUMBER
+    (30) expression -> . LPAREN expression RPAREN
+    (31) expression -> . function_call
+    (32) expression -> . function_decl
     (13) return_stmt -> . RETURN SEMICOLON
     (14) return_stmt -> . RETURN expression SEMICOLON
     (15) if_stmt -> . IF LPAREN expression RPAREN compound_statements else_clause
-    (32) function_call -> . ID LPAREN arguments RPAREN
-    (37) function_decl -> . FUNCTION LPAREN parameters RPAREN compound_statements
+    (33) function_call -> . expression LPAREN arguments RPAREN
+    (38) function_decl -> . FUNCTION LPAREN parameters RPAREN compound_statements
 
-    RBRACKET        shift and go to state 81
+    RBRACKET        shift and go to state 83
     WHILE           shift and go to state 5
     VAR             shift and go to state 4
     ID              shift and go to state 14
@@ -1671,30 +1852,23 @@ state 76
     statement                      shift and go to state 10
     expression                     shift and go to state 19
 
-state 77
-
-    (39) parameters_rest -> COMMA parameter parameters_rest .
-
-    RPAREN          reduce using rule 39 (parameters_rest -> COMMA parameter parameters_rest .)
-
-
-state 78
-
-    (34) arguments_rest -> COMMA argument arguments_rest .
-
-    RPAREN          reduce using rule 34 (arguments_rest -> COMMA argument arguments_rest .)
-
-
 state 79
+
+    (40) parameters_rest -> COMMA parameter parameters_rest .
+
+    RPAREN          reduce using rule 40 (parameters_rest -> COMMA parameter parameters_rest .)
+
+
+state 80
 
     (17) else_clause -> ELSE . compound_statements
     (18) compound_statements -> . LBRACKET statements RBRACKET
 
-    LBRACKET        shift and go to state 70
+    LBRACKET        shift and go to state 72
 
-    compound_statements            shift and go to state 82
+    compound_statements            shift and go to state 84
 
-state 80
+state 81
 
     (15) if_stmt -> IF LPAREN expression RPAREN compound_statements else_clause .
 
@@ -1710,21 +1884,17 @@ state 80
     $end            reduce using rule 15 (if_stmt -> IF LPAREN expression RPAREN compound_statements else_clause .)
 
 
-state 81
+state 82
+
+    (35) arguments_rest -> COMMA argument arguments_rest .
+
+    RPAREN          reduce using rule 35 (arguments_rest -> COMMA argument arguments_rest .)
+
+
+state 83
 
     (18) compound_statements -> LBRACKET statements RBRACKET .
 
-    WHILE           reduce using rule 18 (compound_statements -> LBRACKET statements RBRACKET .)
-    VAR             reduce using rule 18 (compound_statements -> LBRACKET statements RBRACKET .)
-    ID              reduce using rule 18 (compound_statements -> LBRACKET statements RBRACKET .)
-    NUMBER          reduce using rule 18 (compound_statements -> LBRACKET statements RBRACKET .)
-    LPAREN          reduce using rule 18 (compound_statements -> LBRACKET statements RBRACKET .)
-    RETURN          reduce using rule 18 (compound_statements -> LBRACKET statements RBRACKET .)
-    IF              reduce using rule 18 (compound_statements -> LBRACKET statements RBRACKET .)
-    FUNCTION        reduce using rule 18 (compound_statements -> LBRACKET statements RBRACKET .)
-    $end            reduce using rule 18 (compound_statements -> LBRACKET statements RBRACKET .)
-    RBRACKET        reduce using rule 18 (compound_statements -> LBRACKET statements RBRACKET .)
-    ELSE            reduce using rule 18 (compound_statements -> LBRACKET statements RBRACKET .)
     SEMICOLON       reduce using rule 18 (compound_statements -> LBRACKET statements RBRACKET .)
     OP_PLUS         reduce using rule 18 (compound_statements -> LBRACKET statements RBRACKET .)
     OP_MINUS        reduce using rule 18 (compound_statements -> LBRACKET statements RBRACKET .)
@@ -1734,11 +1904,23 @@ state 81
     OP_GTEQ         reduce using rule 18 (compound_statements -> LBRACKET statements RBRACKET .)
     OP_LT           reduce using rule 18 (compound_statements -> LBRACKET statements RBRACKET .)
     OP_LTEQ         reduce using rule 18 (compound_statements -> LBRACKET statements RBRACKET .)
+    OP_EQ           reduce using rule 18 (compound_statements -> LBRACKET statements RBRACKET .)
+    LPAREN          reduce using rule 18 (compound_statements -> LBRACKET statements RBRACKET .)
     RPAREN          reduce using rule 18 (compound_statements -> LBRACKET statements RBRACKET .)
     COMMA           reduce using rule 18 (compound_statements -> LBRACKET statements RBRACKET .)
+    ELSE            reduce using rule 18 (compound_statements -> LBRACKET statements RBRACKET .)
+    WHILE           reduce using rule 18 (compound_statements -> LBRACKET statements RBRACKET .)
+    VAR             reduce using rule 18 (compound_statements -> LBRACKET statements RBRACKET .)
+    ID              reduce using rule 18 (compound_statements -> LBRACKET statements RBRACKET .)
+    NUMBER          reduce using rule 18 (compound_statements -> LBRACKET statements RBRACKET .)
+    RETURN          reduce using rule 18 (compound_statements -> LBRACKET statements RBRACKET .)
+    IF              reduce using rule 18 (compound_statements -> LBRACKET statements RBRACKET .)
+    FUNCTION        reduce using rule 18 (compound_statements -> LBRACKET statements RBRACKET .)
+    $end            reduce using rule 18 (compound_statements -> LBRACKET statements RBRACKET .)
+    RBRACKET        reduce using rule 18 (compound_statements -> LBRACKET statements RBRACKET .)
 
 
-state 82
+state 84
 
     (17) else_clause -> ELSE compound_statements .
 

@@ -37,3 +37,26 @@ var fac = function(n) {
 };
 log(fac(6));
 '''
+
+case_Y = '''
+var Y = function (F) {
+  return (function (x) {
+            return F(function (y) { return (x(x))(y);});
+         })
+         (function (x) {
+            return F(function (y) { return (x(x))(y);});
+         });
+};
+
+var FactGen = function (fact) {
+  return (function(n) {
+            if (n == 0) {
+              return 1;
+            } else {
+              return n * fact(n - 1);
+            }
+         });
+};
+
+log((Y(FactGen))(7));
+'''

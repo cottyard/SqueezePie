@@ -1,6 +1,6 @@
 import runtime
-import builtin
-from excep import ReturnControl, PieUnresolvedSymbol
+from excep import ReturnControl
+
 
 class Program:
   def __init__(self, statements):
@@ -10,8 +10,16 @@ class Program:
     for s in self.statements:
       s.execute(env)
 
+  def __str__(self):
+    return '\n'.join([str(s) for s in self.statements])
 
-class DefineStmt:
+
+class Statement:
+  def __repr__(self):
+    return str(self)
+
+
+class DefineStmt(Statement):
   def __init__(self, var_id_literal, var_value_expr):
     self.var_id_literal = var_id_literal
     self.var_value_expr = var_value_expr
@@ -19,8 +27,11 @@ class DefineStmt:
   def execute(self, env):
     env.set(self.var_id_literal, self.var_value_expr.evaluate(env))
 
+  def __str__(self):
+    return 'var %s = %s' % (self.var_id_literal, str(self.var_value_expr))
 
-class WhileStmt:
+
+class WhileStmt(Statement):
   def __init__(self, condition, statements):
     self.condition = condition
     self.statements = statements
@@ -31,7 +42,7 @@ class WhileStmt:
         s.execute(env)
 
 
-class AssignStmt:
+class AssignStmt(Statement):
   def __init__(self, var_id_literal, var_value_expr):
     self.var_id_literal = var_id_literal
     self.var_value_expr = var_value_expr
@@ -40,15 +51,18 @@ class AssignStmt:
     env.set(self.var_id_literal, self.var_value_expr.evaluate(env))
 
 
-class ReturnStmt:
+class ReturnStmt(Statement):
   def __init__(self, expr=None):
     self.expr = expr
 
   def execute(self, env):
     raise ReturnControl(self.expr)
 
+  def __str__(self):
+    return 'return %s' % str(self.expr)
 
-class IfStmt:
+
+class IfStmt(Statement):
   def __init__(self, cond_expr, statements, else_statements):
     self.cond_expr = cond_expr
     self.statements = statements
@@ -61,20 +75,37 @@ class IfStmt:
       return
     for s in to_exec:
       s.execute(env)
+  
+  def __str__(self):
+    string = 'if (%s) {%s}' % (
+      str(self.cond_expr), 
+      '; '.join([str(s) for s in self.statements]))
+    if self.else_statements is not None:
+      string += ' else {%s}' % '; '.join([str(s) for s in self.else_statements])
+    return string
 
 
 class Expression:
   def execute(self, env):
     self.evaluate(env)
 
+  def __repr__(self):
+    return str(self)
+
 
 class FunctionCall(Expression):
-  def __init__(self, id, arguments):
-    self.id = id
+  def __init__(self, expr, arguments):
+    self.expr = expr
     self.arguments = arguments
 
   def evaluate(self, env):
-    return runtime.apply(self.id, self.arguments, env)
+    function = self.expr.evaluate(env)
+    return runtime.apply(function, self.arguments, env)
+
+  def __str__(self):
+    return '(%s)(%s)' % (
+      str(self.expr),
+      ', '.join([str(s) for s in self.arguments]))
 
 
 class FunctionDecl(Expression):
@@ -83,7 +114,12 @@ class FunctionDecl(Expression):
     self.body = body
 
   def evaluate(self, env):
-    return runtime.function(self.params, self.body)
+    return runtime.function(self.params, self.body, env)
+
+  def __str__(self):
+    return 'function(%s){%s}' % (
+      ', '.join([str(p) for p in self.params]),
+      '; '.join([str(s) for s in self.body]))
 
 
 class BinaryOp(Expression):
@@ -93,7 +129,11 @@ class BinaryOp(Expression):
     self.right = right
 
   def evaluate(self, env):
-    return runtime.apply(self.op, [self.left, self.right], env)
+    return runtime.apply(env.lookup(self.op), [self.left, self.right], env)
+
+  def __str__(self):
+    return '%s %s %s' % (
+      str(self.left), self.op , str(self.right))
 
 
 class Identifier(Expression):
@@ -101,11 +141,10 @@ class Identifier(Expression):
     self.id = id
 
   def evaluate(self, env):
-    try:
-      return env.lookup(self.id)
-    except PieUnresolvedSymbol:
-      return builtin.find(self.id)
+    return env.lookup(self.id)
 
+  def __str__(self):
+    return self.id
 
 class Number(Expression):
   def __init__(self, num):
@@ -113,3 +152,7 @@ class Number(Expression):
 
   def evaluate(self, env):
     return self.num
+
+  def __str__(self):
+    return str(self.num)
+
